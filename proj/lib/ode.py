@@ -6,7 +6,7 @@
 
 import numpy as np
 # importing package like this since conda install does not play nicely
-import integrators
+from . import integrators
 
 class ODEinit(object):
     """

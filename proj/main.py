@@ -7,27 +7,28 @@
 # TODO documentation, the if __name__ == __main__ and so on
 
 # importing package like this since conda install does not play nicely
-import ode
+from lib import ode
 import numpy as np
-import math
+import math 
 import matplotlib.pyplot as plt
+np.fft.fft()
 
 x = 0.0
 y = np.array([0, 1])
 
-def SHO(x: float, y: np.ndarray):
+def SHO(x: float, y: np.ndarray) -> np.ndarray:
     """
     docstring
     """
     return np.array([-1.0*y[1], y[0]])
 
-def someODE(x: float, y: float):
+def someODE(x: float, y: float) -> np.ndarray:
     """
     docstring
     """
     return y*(2/(np.exp(x)+1)-1)
 
-def someODEsln(x: float):
+def someODEsln(x: float) -> float:
     """
     docstring
     analytical solution to the ODE in someODE
