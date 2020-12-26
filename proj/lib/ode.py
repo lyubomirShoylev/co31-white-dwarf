@@ -1,44 +1,44 @@
+"""
+Hey there, this is a docstring.
+"""
 # Will include the definition of an ode
-# Pass to it the initial value of y-vector, the function f-vector, and the range
+# Pass to it the initial value of y0-vector, the derivtion f-vector, and the range
 # over which to return values. Will be able to select a given integration method
 # to compare them later in the lab report.
 # TODO documentation, the if __name__ == __main__ and so on
 
 import numpy as np
-# importing package like this since conda install does not play nicely
 from . import integrators
 
 class ODEinit(object):
     """
-    docstring
+    y0 - initial value
     """
-    def __init__(self, x: int, y: np.ndarray, func, interval: float,
-                 range: np.ndarray) -> None:
-        self.x = x
-        self.y = y
-        self.func = func
-        self.interval = interval
+    def __init__(self, y0: np.ndarray, deriv: function, range: np.ndarray) -> None:
+        self.y0 = y0
+        self.deriv = deriv
+        self.interval = range[1] - range[0]
         self.range = range
     
-    def integrate(self, intType: int=3) -> None:
+    def integrate(self, integrator: int=3) -> None:
         """
         docstring
         """
-        if intType == 1:
+        if integrator == 1:
             self.integrator = integrators.euler
-        elif intType == 2:
+        elif integrator == 2:
             self.integrator = integrators.heun
-        elif intType == 3:
+        elif integrator == 3:
             self.integrator = integrators.rk4
         else:
             # implement throwing error (at the end)
             pass
 
-        self.yOut = np.zeros((self.range.size, self.y.size))
-        self.yOut[0,:] = self.y[:]
+        self.yOut = np.zeros((self.range.size, self.y0.size))
+        self.yOut[0,:] = self.y0[:]
         for i in range(1, self.range.size):
             adder = self.integrator(
-                self.range[i], self.yOut[i-1,:], self.func, self.interval)
+                self.range[i], self.yOut[i-1,:], self.deriv, self.interval)
             self.yOut[i,:] = adder
         
 

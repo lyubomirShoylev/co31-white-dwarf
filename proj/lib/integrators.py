@@ -33,9 +33,7 @@ integration range. How we determine its value, or more precisely the increment
 from the previous value, is the difference between these methods.
 """
 # TODO improve memory/calc cycles
-# TODO documentation of functions,
 import numpy as np
-
 
 def euler(x: float, y: np.ndarray, deriv: function, h: float) -> np.ndarray:
     """
@@ -99,7 +97,7 @@ def heun(x: float, y: np.ndarray, deriv: function, h: float) -> np.ndarray:
     """
     return y + 0.5*h*(deriv(x, y) + deriv(x + h, y + h*deriv(x,y)))
 
-def rk4(x, y, deriv, h):
+def rk4(x: float, y: np.ndarray, deriv: function, h: float) -> np.ndarray:
     """
     Compute an iteration using a 4th order Runge-Kutta method.
 
