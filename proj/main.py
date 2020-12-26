@@ -7,53 +7,45 @@
 # TODO documentation, the if __name__ == __main__ and so on
 
 # importing package like this since conda install does not play nicely
-from lib import ode
+from numpy.core.function_base import linspace
+from lib import ode,whiteDwarf, derivatives
 import numpy as np
 import math 
 import matplotlib.pyplot as plt
-np.fft.fft()
+import scipy.constants as const
+# np.fft.fft()
 
 x = 0.0
 y = np.array([0, 1])
+# h = 0.001
 
-def SHO(x: float, y: np.ndarray) -> np.ndarray:
-    """
-    docstring
-    """
-    return np.array([-1.0*y[1], y[0]])
+# lel = np.linspace(0,10,10001)
+# func = derivatives.someODE
+# eul = ode.ODEinit(x, y, func, h, lel)
+# eul.integrate(1)
 
-def someODE(x: float, y: float) -> np.ndarray:
-    """
-    docstring
-    """
-    return y*(2/(np.exp(x)+1)-1)
+# heu = ode.ODEinit(x, y, func, h, lel)
+# heu.integrate(2)
 
-def someODEsln(x: float) -> float:
-    """
-    docstring
-    analytical solution to the ODE in someODE
-    """
-    return 12*np.exp(x)*((np.exp(x)+1)**(-2))
+# rk4 = ode.ODEinit(x, y, func, h, lel)
+# rk4.integrate(3)
 
-h = 0.001
+yo = linspace(1,1e7,num=10000001)
+rho1 = 1.0e10
+rho2 = 1.0e13
+star1 = whiteDwarf.WhiteDwarf(rho1, yo, 1)
+star1.integrate(3)
 
-lel = np.linspace(0,10,10001)
-func = someODE
-eul = ode.ODEinit(x, y, func, h, lel)
-eul.integrate(1)
-
-heu = ode.ODEinit(x, y, func, h, lel)
-heu.integrate(2)
-
-rk4 = ode.ODEinit(x, y, func, h, lel)
-rk4.integrate(3)
+star2 = whiteDwarf.WhiteDwarf(rho2, yo, 1)
+star2.integrate(3)
 
 # TODO collect the plotting procedure nicely
 
 # analytical = np.cos(lel)
-analytical = someODEsln(lel)
-plt.plot(lel, analytical - eul.yOut[:,1])
-plt.plot(lel, analytical - heu.yOut[:,1])
-plt.plot(lel, analytical - rk4.yOut[:,1])
-
+# analytical = derivatives.someODEsln(lel)
+# plt.plot(lel, analytical - eul.yOut[:,1])
+# plt.plot(lel, analytical - heu.yOut[:,1])
+# plt.plot(lel, analytical - rk4.yOut[:,1])
+plt.plot(yo, star1.yOut[:,0])
+plt.plot(yo, star2.yOut[:,0])
 plt.show()
