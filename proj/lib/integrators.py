@@ -35,7 +35,7 @@ from the previous value, is the difference between these methods.
 # TODO improve memory/calc cycles
 import numpy as np
 
-def euler(x: float, y: np.ndarray, deriv: function, h: float) -> np.ndarray:
+def euler(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     """
     Compute an iteration using Euler's method: a 1st order method.
 
@@ -66,7 +66,7 @@ def euler(x: float, y: np.ndarray, deriv: function, h: float) -> np.ndarray:
     # TODO include examples
     return y + h*deriv(x,y)
 
-def heun(x: float, y: np.ndarray, deriv: function, h: float) -> np.ndarray:
+def heun(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     """
     Compute an iteration using Heun's method, a kind of 2nd order method.
 
@@ -97,7 +97,7 @@ def heun(x: float, y: np.ndarray, deriv: function, h: float) -> np.ndarray:
     """
     return y + 0.5*h*(deriv(x, y) + deriv(x + h, y + h*deriv(x,y)))
 
-def rk4(x: float, y: np.ndarray, deriv: function, h: float) -> np.ndarray:
+def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     """
     Compute an iteration using a 4th order Runge-Kutta method.
 

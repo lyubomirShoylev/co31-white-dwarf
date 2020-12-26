@@ -2,7 +2,7 @@
 Hey there, this is a docstring.
 """
 # Will include the definition of an ode
-# Pass to it the initial value of y0-vector, the derivtion f-vector, and the range
+# Pass to it the initial value of y0-vector, the derivtion f-vector, and the span
 # over which to return values. Will be able to select a given integration method
 # to compare them later in the lab report.
 # TODO documentation, the if __name__ == __main__ and so on
@@ -14,16 +14,17 @@ class ODEinit(object):
     """
     y0 - initial value
     """
-    def __init__(self, y0: np.ndarray, deriv: function, range: np.ndarray) -> None:
+    def __init__(self, y0: np.ndarray, deriv, span: np.ndarray) -> None:
         self.y0 = y0
         self.deriv = deriv
-        self.interval = range[1] - range[0]
-        self.range = range
+        self.interval = span[1] - span[0]
+        self.span = span
     
     def integrate(self, integrator: int=3) -> None:
         """
         docstring
         """
+        # TODO replace with dict for neatness (can do since execute only once)
         if integrator == 1:
             self.integrator = integrators.euler
         elif integrator == 2:
@@ -34,11 +35,11 @@ class ODEinit(object):
             # implement throwing error (at the end)
             pass
 
-        self.yOut = np.zeros((self.range.size, self.y0.size))
+        self.yOut = np.zeros((self.span.size, self.y0.size))
         self.yOut[0,:] = self.y0[:]
-        for i in range(1, self.range.size):
+        for i in range(1, self.span.size):
             adder = self.integrator(
-                self.range[i], self.yOut[i-1,:], self.deriv, self.interval)
+                self.span[i], self.yOut[i-1,:], self.deriv, self.interval)
             self.yOut[i,:] = adder
         
 
