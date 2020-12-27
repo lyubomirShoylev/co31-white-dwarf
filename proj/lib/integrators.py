@@ -123,6 +123,7 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
         Runge-Kutta algoritm.
     """
     # TODO reduce the calculation cycle per NumMeht book
+    # TODO protection against negative y[0] value in the calls at ki
     k1 = h*deriv(x,y)
     k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
     k3 = h*deriv(x + 0.5*h, y + 0.5*k2)

@@ -37,10 +37,13 @@ class ODEinit(object):
 
         self.yOut = np.zeros((self.span.size, self.y0.size))
         self.yOut[0,:] = self.y0[:]
-        for i in range(1, self.span.size):
+        for i in range(self.span.size-1):
             adder = self.integrator(
-                self.span[i], self.yOut[i-1,:], self.deriv, self.interval)
-            self.yOut[i,:] = adder
+                self.span[i], self.yOut[i,:], self.deriv, self.interval)
+            self.yOut[i+1,:] = adder
+            # HACK  hardcode integration termination because of white dwarfs
+            if adder[0] <= 1e-10:
+                break
         
 
     pass

@@ -13,6 +13,9 @@ import numpy as np
 import math 
 import matplotlib.pyplot as plt
 import scipy.constants as const
+import warnings
+warnings.filterwarnings("error")
+
 # np.fft.fft()
 
 x = 0.0
@@ -31,10 +34,24 @@ y = np.array([0, 1])
 # rk4.integrate(3)
 
 yo = linspace(1,1e7,num=10000001)
-rho1 = 1.0e10
+rho = linspace(1e6, 1e14, 40)
+rAndM = np.zeros((40,2))
+for i in range(40):
+    star = whiteDwarf.WhiteDwarf(rho[i], yo, 1)
+    star.integrate(3)
+
+    rAndM[i,:] = star.getRadiusMass()
+
+np.savetxt('values.csv', rAndM, delimiter=',')
+
+
+rho1 = 1.0e9
 rho2 = 1.0e13
 star1 = whiteDwarf.WhiteDwarf(rho1, yo, 1)
 star1.integrate(3)
+
+radius1, mass1 = star1.getRadiusMass()
+print(radius1/1000, mass1/1.988e30)
 
 star2 = whiteDwarf.WhiteDwarf(rho2, yo, 1)
 star2.integrate(3)

@@ -37,7 +37,7 @@ def nonRelativGas(x: float, y: np.ndarray, scalar: float) -> np.ndarray:
     np.ndarray
         [description]
     """
-    out = np.array([scalar*y[1]*(y[0]**(1.0/3))*(x**(-2.0)), 3*(x**2)*y[0]])
+    out = np.array([scalar*y[1]*(y[0]**(1.0/3))*(x**(-2.0)), 3*(float(x)**2)*y[0]])
     return out
 
 def relativGas(parameter_list):
