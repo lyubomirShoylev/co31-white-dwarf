@@ -31,6 +31,9 @@ four parameters:
 All of the functions return the value of y for the next place in the
 integration range. How we determine its value, or more precisely the increment
 from the previous value, is the difference between these methods.
+
+Error handling is implemented in rk4 (the one used for actual calculations),
+where evaluating the deriv function might not be possible.
 """
 # TODO improve memory/calc cycles
 from math import e
@@ -122,17 +125,30 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     np.ndarray
         The returned value is the approximation of y(x + h) using the 4th order
         Runge-Kutta algoritm.
+    
+    Raises
+    ------
+    ValueError
+        If an error is raised by the deriv function indicating impossible
+        evaluation, raise an error to indicate the termination of integration.
+
+    Notes
+    -----
+    Note that in the case deriv cannot be computed for any of the steps, the
+    error is handled by raising a value error back to the integrator method of 
+    the ODE class where this is handled.
     """
     # TODO reduce the calculation cycle per NumMeht book
-    # TODO protection against negative y[0] value in the calls at ki
     try:
         k1 = h*deriv(x,y)
         k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
         k3 = h*deriv(x + 0.5*h, y + 0.5*k2)
         k4 = h*deriv(x + h, y + k3)
     except ValueError:
-        raise ValueError
-
+        raise ValueError("Invalid integration, terminate integration!")
+    
+    # TODO protection against negligible yOut[0] - recommended by the lab
+    # script, I believe we can do without
 
     return y + (k1 + k4)/6.0 + (k2 + k3)/3.0
 
