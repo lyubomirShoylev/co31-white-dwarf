@@ -33,6 +33,7 @@ integration range. How we determine its value, or more precisely the increment
 from the previous value, is the difference between these methods.
 """
 # TODO improve memory/calc cycles
+from math import e
 import numpy as np
 
 def euler(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
@@ -124,10 +125,14 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     """
     # TODO reduce the calculation cycle per NumMeht book
     # TODO protection against negative y[0] value in the calls at ki
-    k1 = h*deriv(x,y)
-    k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
-    k3 = h*deriv(x + 0.5*h, y + 0.5*k2)
-    k4 = h*deriv(x + h, y + k3)
+    try:
+        k1 = h*deriv(x,y)
+        k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
+        k3 = h*deriv(x + 0.5*h, y + 0.5*k2)
+        k4 = h*deriv(x + h, y + k3)
+    except ValueError:
+        raise ValueError
+
 
     return y + (k1 + k4)/6.0 + (k2 + k3)/3.0
 

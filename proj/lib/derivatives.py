@@ -37,6 +37,9 @@ def nonRelativGas(x: float, y: np.ndarray, scalar: float) -> np.ndarray:
     np.ndarray
         [description]
     """
+    if y[0] < 0:
+        # need y[0] >= 0 to be exponentiated (on physical grounds as well)
+        raise ValueError
     out = np.array([scalar*y[1]*(y[0]**(1.0/3))*(x**(-2.0)), 3*(float(x)**2)*y[0]])
     return out
 
