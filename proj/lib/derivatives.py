@@ -1,8 +1,23 @@
 """
-# a file containing some derivative functions that are to be used by an ODE as
-# the derivative. Include the functions for a white-dwarf in the different
-# regimes - relativistic and non-relativistic
-Description: collection of functions with which to test/compute
+Derivatives Library(`derivatives.py`)
+=====================================
+
+This is a home to several functions which give the derivative `f` in a system
+of linear ODEs `y'(x) = f(x, y)` in functional form.
+
+White Dwarf Functions
+---------------------
+nonRelativGas       Implements the eqn. of state for non-relativistic electrons
+relaitvGas          Implements the eqn. of state for relativistic electrons.
+
+Testing Functions
+-----------------
+SHO                 Implements the Simple Harmonic Oscillator.
+
+Implementation Notes
+--------------------
+Choice of an equation of state for the white dwarf is aided by the dictionary
+`index`, mapping integer values to the integrator functions.
 """
 # TODO to implement a diff eqn ~ second power to evaluate the error in a 
 # comparable eqn to the one we are solving
@@ -71,6 +86,8 @@ def nonRelativGas(x: float, y: np.ndarray, const: float) -> np.ndarray:
     """
     
     # need y[0] >= 0 to be exponentiated apart from physical grounds
+    # this catches the moment y[0] becomes too small - only it is on the
+    # computation of the following value
     if y[0] < 0:
         raise ValueError
     return  np.array([const*y[1]*(y[0]**(1.0/3))*(x**(-2.0)), 
@@ -117,7 +134,9 @@ def relativGas(x: float, y: np.ndarray, const1: float ,const2: float) -> np.ndar
     """
 
     # need y[0] >= 0 to be exponentiated apart from physical grounds
-    if y[0] < 0:
+    # this catches the moment y[0] becomes too small - only it is on the
+    # computation of the following value
+    if y[0] < 1e10:
         raise ValueError
 
     return np.array([const1*y[1]*(y[0]**(1.0/3))*(x**(-2.0))*
@@ -133,3 +152,10 @@ def ultraRel(x: float, y: np.ndarray, const: float) -> np.ndarray:
         raise ValueError
     out = np.array([0, 0])
     return out
+
+index = {1: nonRelativGas, 2: relativGas}
+
+if __name__=="__main__":
+    print(
+        "This is a home to several functions which give the derivative in a \
+system of linear ODEs.")

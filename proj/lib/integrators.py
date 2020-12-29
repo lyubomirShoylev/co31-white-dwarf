@@ -7,7 +7,7 @@ exercise, namely Runge-Kutta 4th order (rk4) method. We implement two other
 methods to evaluate the advantages of the rk4 method, both in its accuracy and
 precision.
 
-Methods implemented
+Integration Methods implemented
 -------------------
 
     euler   Euler method - 1st order.
@@ -16,27 +16,27 @@ Methods implemented
 
 Implementation notes
 --------------------
-
 All of the functions defined are to act on np.ndarray structures, therefore 
 should be element-wise functions; all of the magic is done for us by numpy. 
 The differential equation which they iterate is set up as `dy/dx = f(x, y)`, 
-where y and f are N-dimensional vectors. Hence, all of the functions recieve 
-four parameters:
+where `y` and `f` are N-dimensional vectors. Hence, all of the functions
+recieve four parameters:
 
     x : float, the point at which we start computing
     y : array_like, the values of the y-vector at x
     deriv : function, the derivative of y to be computed at some (x, y) coords
     h : float, the interval size
 
-All of the functions return the value of y for the next place in the
+All of the functions return the value of `y` for the next place in the
 integration range. How we determine its value, or more precisely the increment
 from the previous value, is the difference between these methods.
 
-Error handling is implemented in rk4 (the one used for actual calculations),
-where evaluating the deriv function might not be possible.
+Error handling is implemented in `rk4` (the one used for actual calculations),
+where evaluating the `deriv` function might not be possible.
+
+Choice of an integrator is aided by the dictionary `index`, mapping integer
+values to the integrator functions.
 """
-# TODO improve memory/calc cycles
-from math import e
 import numpy as np
 
 def euler(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
@@ -65,9 +65,7 @@ def euler(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     ndarray
         The returned value is the approximation of y(x + h) using the Euler
         algoritm.
-
     """
-    # TODO include examples
     return y + h*deriv(x,y)
 
 def heun(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
@@ -146,11 +144,11 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
         k4 = h*deriv(x + h, y + k3)
     except ValueError:
         raise ValueError("Invalid integration, terminate integration!")
-    
-    # TODO protection against negligible yOut[0] - recommended by the lab
-    # script, I believe we can do without
 
     return y + (k1 + k4)/6.0 + (k2 + k3)/3.0
+
+# dictionary to choose integrator
+index = {1: euler, 2: heun, 3: rk4}
 
 if __name__=="__main__":
     print(

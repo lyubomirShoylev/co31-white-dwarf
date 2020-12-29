@@ -1,66 +1,102 @@
 """
-White dwarf class
+White dwarf class wrapper.
 """
+# TODO finish documentation
 from . import ode, derivatives
 import numpy as np
-from scipy import constants as cs
+from scipy import constants as cs       # constants for the derivative equation
 
-class WhiteDwarf(ode.ODEinit):
+class whiteDwarf(ode.ODEinit):
     """
-    docstring
+    Provides a wrapper of the ODEinit class in the case of white dwarfs with
+    some equation of state. Initializes an ODE with appropriate initial
+    conditions while taking into account a normalization which leaves the ODE
+    working with dimensionless quantities.
+
+    Parameters
+    ----------
+    rhoC : float
+        The density of matter in the small region around the center. In units
+        of kg * m^(-3)
+    span : np.ndarray
+        The range of values of r to be calculated at. In normalized units to 
+        cut down on computational time and improve calculation accuracy.
+    regime : {1, 2, 3}, optional
+        The regime indicates the choice of equation of state -> derivative, by
+        default 1 - non-relativistic.
+
+    Attributes
+    ----------
+    rhoC : float
+        The density of matter in the small region around the center
+    const1 : float
+        Constant to be used in the derivative, depends on the `rhoC` value.
+        Value after the normalization.
+    const2 : float
+        Second constant to be used in the derivative for the relativistic case,
+        depends on `rhoC`. Value after the normalization.
+    Radius : float
+        Physical radius of the star. Has a value only after `getRadius()` has
+        been called.
+    Mass : float
+        Mass of the star. Has a value only after `getRadius()` has been called.
+
+    Methods
+    -------
+    getRadius
+        Returns the tuple `(Radius, Mass)` of the star if the equation has been 
+        integrated.
+
+    Background
+    ----------
+    TODO explain the normalization.
+    scaling constant in the equation, choose l^3 * 4*pi/3 = 1
     """
-    def __init__(self, rhoC, span, regime=1):
-        """
-        docstring - override the ode init
-        """
-        # pre-filter the init_conditions of a white dwarf to fit a general ODE
-        # the direction of init_condit determined by the eqn - current is rho,m
-        # rhoC will be the scaling constant for the (rho, m)  vector in the 
-        # chosen base.
+
+    def __init__(self, rhoC: float, span: np.ndarray, regime: int=1) -> None:
         self.rhoC = rhoC
+        # vector to be given as initial conditions, [rho, mass]
         init_condit = np.array([1.0, 1.0*(span[0]**3)])
-        # determine func according to regime
-        # TODO replace with dict for neatness (can do since execute only once)
-        # scaling constant in the equation, choose l^3 * 4*pi/3 = 1
-        self.scalar = -(2**(13.0/3))*cs.pi*cs.gravitational_constant*\
-            cs.electron_mass*(cs.proton_mass**(5.0/3))*(rhoC**(1.0/3))*(cs.h**(-2.0))
+
+        # constants in the derivative; computed here so that they are computed
+        # only once rather than every time the derivative func is called
+        self.const1 = -(2**(13.0/3))*cs.pi*cs.gravitational_constant *\
+            cs.electron_mass*(cs.proton_mass**(5.0/3)) * \
+            (rhoC**(1.0/3))*(cs.h**(-2.0))
+        self.const2 = (3*rhoC/16/cs.pi/cs.proton_mass *
+                       (cs.h/cs.c/cs.electron_mass)**3)**(2.0/3)
+
+        # choose the equation of state and pass constants
         if regime == 1:
-            func = lambda a, b: derivatives.nonRelativGas(a, b, self.scalar)
+            func = lambda a, b: derivatives.nonRelativGas(a, b, self.const1)
         elif regime == 2:
-            func = lambda a, b: derivatives.relativGas(a, b, self.scalar)
+            func = lambda a, b: derivatives.relativGas(a, b, self.const1,
+                                                         self.const2)
         elif regime == 3:
-            func = lambda a, b: derivatives.ultraRel(a, b, self.scalar)
-        else:
-            # implement throwing error (at the end)
-            pass
-        self.flagIntegr = False
-        super(WhiteDwarf, self).__init__(init_condit, func, span)
-    
-    # integrate part of odeinit
-    def integrate(self, integrator: int) -> None:
-        """
-        docstring
-        """
-        self.flagIntegr = True
-        super(WhiteDwarf, self).integrate(integrator)
+            func = lambda a, b: derivatives.ultraRel(a, b, self.const1)
+        
+        super(whiteDwarf, self).__init__(init_condit, func, span)
 
     def getRadiusMass(self) -> tuple:
+        """[summary]
+
+        Returns
+        -------
+        tuple
+            [description]
         """
-        docstring
-        """
-        # implement some cut-off, maybe regime-dependent, i.e. for non-relativ
-        # we have some rho<<rhoC, for relativistic where rho changes sign
-        
-        # find index of rho = 0
+
+        # find index of rho = 0 (changing signs)
         if self.flagIntegr:
-            index = np.searchsorted(-self.yOut[:,0],0)
-            l = (3/(4*np.pi))**(1.0/3.0)
-            self.Radius = index*l
-            self.Mass = self.yOut[index-1,1]*self.rhoC
-            # l - scaling const
+            index = np.searchsorted(-self.yOut[:, 0], 0)
+            l = (3/(4*np.pi))**(1.0/3.0)                # normalization const
+            self.Radius = (index-1)*l                   # in m
+            self.Mass = self.yOut[index-1, 1]*self.rhoC # in kg*m^(-3)
             return self.Radius, self.Mass
         else:
             print("Integrate the eqn first")
             return None, None
 
-    
+if __name__=="__main__":
+    print(
+        "This file contains declaration of a white dwarf class.")
