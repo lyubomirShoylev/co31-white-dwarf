@@ -51,6 +51,8 @@ def SHO(x: float, y: np.ndarray) -> np.ndarray:
 
 def nonRelativGas(x: float, y: np.ndarray, const: float) -> np.ndarray:
     """
+    Function for the coupled ODE using a non-relativistic equation of state.
+
     Function of the derivative for the system of coupled equations
     `y = [rho, m](x)` in the non-relativistic case. An additional argument
     `const` is passed to save computational time - it is calculated only once
@@ -95,6 +97,8 @@ def nonRelativGas(x: float, y: np.ndarray, const: float) -> np.ndarray:
 
 def relativGas(x: float, y: np.ndarray, const1: float ,const2: float) -> np.ndarray:
     """
+    Function for the coupled ODE using a relativistic equation of state.
+
     Function of the derivative for the system of coupled equations
     `y = [rho, m](x)` in the relativistic case. Two additional arguments 
     `const1` and `const2` are passed to save on computational time - they are

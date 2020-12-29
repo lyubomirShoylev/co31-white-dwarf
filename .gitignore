@@ -1,4 +1,4 @@
 /proj/.spyproject/
 /proj/__pycache__/
-/proj/lib/__pycache__/
+/**/__pycache__/
 *.csv

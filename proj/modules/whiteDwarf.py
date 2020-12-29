@@ -1,9 +1,10 @@
 """
 White dwarf class wrapper.
 """
-from . import ode, derivatives
 import numpy as np
-from scipy import constants as cs       # constants for the derivative equation
+from scipy import constants as cs  # constants for the derivative equation
+
+from . import derivatives, ode
 
 class whiteDwarf(ode.ODEinit):
     """

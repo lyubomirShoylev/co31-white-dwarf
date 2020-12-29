@@ -37,6 +37,7 @@ where evaluating the `deriv` function might not be possible.
 Choice of an integrator is aided by the dictionary `index`, mapping integer
 values to the integrator functions.
 """
+
 import numpy as np
 
 def euler(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
@@ -134,18 +135,39 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     -----
     Note that in the case deriv cannot be computed for any of the steps, the
     error is handled by raising a value error back to the integrator method of 
-    the ODE class where this is handled.
+    the ODE class where this is handled. Additionally, an improvement in the
+    calculation order is implemented as per [1]_, where caluclation cycle
+    number is reduced, as well as memory usage.
+
+    Sources
+    -------
+    ..[1] Press, William H., Saul A. Teukolsky, William T. Vetterling, and 
+    Brian P. Flannery. "Numerical Recipes : The Art of Scientific Computing."
+    Third ed. Cambridge, 2007.
     """
-    # TODO reduce the calculation cycle per NumMeht book
+    # TODO ask/look up if this actually improved anything
     try:
-        k1 = h*deriv(x,y)
-        k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
-        k3 = h*deriv(x + 0.5*h, y + 0.5*k2)
-        k4 = h*deriv(x + h, y + k3)
+        # Old implementation, uses more cycles and memory
+        # k1 = h*deriv(x,y)
+        # k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
+        # k3 = h*deriv(x + 0.5*h, y + 0.5*k2)
+        # k4 = h*deriv(x + h, y + k3)
+        hh = 0.5*h
+        h6 = h/6.0
+        xh = x + hh
+        k1 = deriv(x, y)
+        yTemp = y + hh*k1
+        k2 = deriv(xh, yTemp)
+        yTemp = y + hh*k2
+        k3 = deriv(xh, yTemp)
+        yTemp = y + k3
+        k3 += k2
+        k2 = deriv(x+h, yTemp)
     except ValueError:
         raise ValueError("Invalid integration, terminate integration!")
 
-    return y + (k1 + k4)/6.0 + (k2 + k3)/3.0
+    # return y + (k1 + k4)/6.0 + (k2 + k3)/3.0
+    return y + h6*(k1 + k2 + 2*k3)
 
 # dictionary to choose integrator
 index = {1: euler, 2: heun, 3: rk4}
