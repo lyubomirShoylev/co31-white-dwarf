@@ -90,7 +90,7 @@ def nonRelativGas(x: float, y: np.ndarray, const: float) -> np.ndarray:
     # need y[0] >= 0 to be exponentiated apart from physical grounds
     # this catches the moment y[0] becomes too small - only it is on the
     # computation of the following value
-    if y[0] < 0:
+    if y[0] < 1e-10:
         raise ValueError
     return  np.array([const*y[1]*(y[0]**(1.0/3))*(x**(-2.0)), 
                         3*(x**2)*y[0]])
@@ -140,7 +140,7 @@ def relativGas(x: float, y: np.ndarray, const1: float ,const2: float) -> np.ndar
     # need y[0] >= 0 to be exponentiated apart from physical grounds
     # this catches the moment y[0] becomes too small - only it is on the
     # computation of the following value
-    if y[0] < 1e10:
+    if y[0] < 1e-10:
         raise ValueError
 
     return np.array([const1*y[1]*(y[0]**(1.0/3))*(x**(-2.0))*
@@ -151,7 +151,7 @@ def ultraRel(x: float, y: np.ndarray, const: float) -> np.ndarray:
     """
     docstring - placeholder
     """
-    if y[0] < 0:
+    if y[0] < 1e-10:
         # need y[0] >= 0 to be exponentiated (on physical grounds as well)
         raise ValueError
     out = np.array([0, 0])
