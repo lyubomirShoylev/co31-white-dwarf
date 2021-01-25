@@ -61,6 +61,8 @@ class ODEinit(object):
         self.flagIntegr = False
     
     def integrate(self, integrator: int=3) -> None:
+        # TODO expand documentation to explain integrator number to integrator
+        # mapping to be more usable
         """
         Integrates the equation using the function of the derivative `deriv`.
         User has the option to choose an integrator from the library, the
