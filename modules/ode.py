@@ -39,7 +39,7 @@ class ODEinit(object):
         The computed values of `y` after integration. Initialized as a martix
         of zeros; if integration terminates before the end of `span`, the rest
         of the points are left as zeros.
-    flagIntegr : bool
+    flagIntegrated : bool
         A flag to indicate whether the integration has been done (and `yOut`
         filled) to be used by methods depending on having computed values.
     
@@ -57,12 +57,11 @@ class ODEinit(object):
 
         # size of this is number of values to be computed x dimensions of y
         self.yOut = np.zeros((self.span.size, self.y0.size))
-
-        self.flagIntegr = False
+        
+        # a flag taking note if the equation has been integrated
+        self.flagIntegrated = False
     
     def integrate(self, integrator: int=3) -> None:
-        # TODO expand documentation to explain integrator number to integrator
-        # mapping to be more usable
         """
         Integrates the equation using the function of the derivative `deriv`.
         User has the option to choose an integrator from the library, the
@@ -73,11 +72,14 @@ class ODEinit(object):
         Parameters
         ----------
         integrator : {1, 2, 3}, optional
-            Choice of the integrator to be used, by default 3 - the RK4 method.
+            Choice of the integrator to be used given by the number:
+                1: the Euler first order method;
+                2: the Heun method, a second order method;
+                3: the Runge-Kutta 4th order method.
         
         See Also
         --------
-        lib.integrators
+        modules.integrators
         """
         # choose an integrator
         self.integrator = integrators.index[integrator]
@@ -102,7 +104,7 @@ class ODEinit(object):
                 break
         
         # to assert that the ODE has been integrated in funtions that use yOut.
-        self.flagIntegr = True
+        self.flagIntegrated = True
 
 if __name__=="__main__":
     print(

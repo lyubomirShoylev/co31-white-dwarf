@@ -147,7 +147,7 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     """
     # TODO ask/look up if this actually improved anything
     try:
-        # Old implementation, uses more cycles and memory
+        # Old implementation, uses more cycles and memory (allegedly)
         # k1 = h*deriv(x,y)
         # k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
         # k3 = h*deriv(x + 0.5*h, y + 0.5*k2)
@@ -169,7 +169,7 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     # return y + (k1 + k4)/6.0 + (k2 + k3)/3.0
     return y + h6*(k1 + k2 + 2*k3)
 
-# dictionary to choose integrator
+# dictionary to choose integrator; for neater code in modules.ode
 index = {1: euler, 2: heun, 3: rk4}
 
 if __name__=="__main__":
