@@ -110,12 +110,12 @@ class whiteDwarf(ode.ODEinit):
         """
 
         # find index of rho = 0 (changing signs)
-        if self.flagIntegr:
+        if self.flagIntegrated:
             index = np.searchsorted(-self.yOut[:, 0], 0)
             # index is the position where we have yOut[index,:] ~ [0,0]
 
             l = (3/(4*np.pi))**(1.0/3.0)                # normalization const
-            self.Radius = (index-1)*l                   # in m
+            self.Radius = (index-1)*self.interval*l     # in m
             self.Mass = self.yOut[index-1, 1]*self.rhoC # in kg*m^(-3)
             return self.Radius, self.Mass
         else:
