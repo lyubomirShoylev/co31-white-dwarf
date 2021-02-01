@@ -1,9 +1,8 @@
-"""
-convergence.py
+"""convergence.py
 This is an auxiliary script, which helps determine the convergence of 
 computing white dwarf parameters and in turn judge the needed coarsness of 
 the integration space. Many of the functions here are direct copies of the ones
-in main.py; look there for more explanation.
+in main.py; look there for more explanation. Outputs .csv files of calculations.
 """
 
 import math
@@ -28,6 +27,7 @@ def starInitNonRelativ(rhoC, n):
     star.integrate(3)
 
     radius, mass = star.getRadiusMass()
+    # for logging purposes
     print("Calculation done for rho = {}; elapsed time = {}".format(rhoC, datetime.now() - startTime))
     # return the three values rho in kg*m^(-3), radius in km/1000, mass in solar mass
     return [rhoC, radius/1000, mass/1.988e30, datetime.now() - startTime]
@@ -43,6 +43,7 @@ def starInitRelativ(rhoC, n):
     star.integrate(3)
 
     radius, mass = star.getRadiusMass()
+    # for logging purposes
     print("Calculation done for rho = {}; elapsed time = {}".format(rhoC, datetime.now() - startTime))
     # return the three values rho in kg*m^(-3), radius in km/1000, mass in solar mass
     return [rhoC, radius/1000, mass/1.988e30, datetime.now() - startTime]
