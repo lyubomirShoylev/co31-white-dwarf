@@ -30,7 +30,7 @@ def starInitNonRelativ(rhoC, n):
     # for logging purposes
     print("Calculation done for rho = {}; elapsed time = {}".format(rhoC, datetime.now() - startTime))
     # return the three values rho in kg*m^(-3), radius in km/1000, mass in solar mass
-    return [rhoC, radius/1000, mass/1.988e30, datetime.now() - startTime]
+    return [rhoC, radius/1000, mass/1.988e30]
 
 # Direct copy of the method in main.py, only added a variable for the number of
 # intervals in the space (since we are probing it). Additionally, computation
@@ -46,7 +46,7 @@ def starInitRelativ(rhoC, n):
     # for logging purposes
     print("Calculation done for rho = {}; elapsed time = {}".format(rhoC, datetime.now() - startTime))
     # return the three values rho in kg*m^(-3), radius in km/1000, mass in solar mass
-    return [rhoC, radius/1000, mass/1.988e30, datetime.now() - startTime]
+    return [rhoC, radius/1000, mass/1.988e30]
 
 # Loop the three densities - two at the ends of the interval and one at the middle
 for density in [1e6, 1e10, 1e14]:
