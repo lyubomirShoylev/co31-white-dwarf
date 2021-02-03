@@ -84,7 +84,7 @@ def main():
     # Computation is done over the range of central density values rhoVal.
 
     # Computation for non-relativistic gas. This process sets up the
-    # multiprocessing and cleans up after thecalculations are over.
+    # multiprocessing and cleans up after the calculations are over.
     with Pool(cpu_count(), maxtasksperchild=1) as executor:
         # The executor.map(f, s) applies the function f to each member of the
         # iterable s and collects the results in a list following a First In 
@@ -97,7 +97,7 @@ def main():
     dfNonRel.to_csv("nonRelativRes.csv", index=None)
 
     # Computation for non-relativistic gas. This process sets up the
-    # multiprocessing and cleans up after thecalculations are over.
+    # multiprocessing and cleans up after the calculations are over.
     with Pool(cpu_count()-6, maxtasksperchild=1) as executor:
         # The executor.map(f, s) applies the function f to each member of the
         # iterable s and collects the results in a list following a First In 
