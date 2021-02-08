@@ -14,8 +14,10 @@
 \sisetup{separate-uncertainty = true, multi-part-units = brackets}
 % differential (needs upright, not slanted d)
 \newcommand{\dd}{\mathop{}\!\mathrm{d}}
+% boldface vectors
 \renewcommand{\vec}[1]{\boldsymbol{#1}}
-%\newcommand{\vec}[1]{\mathbf{#1}}
+% fractions as powers
+\usepackage{xfrac}
 
 %%% References
 \usepackage{hyperref}
@@ -24,172 +26,167 @@
 	linkcolor=blue,
 	filecolor=magenta,
 	urlcolor=cyan,
+	citecolor=blue,
 }
 % more options on https://www.overleaf.com/learn/latex/hyperlinks
 
 \begin{document}
 
-\title{This is a title}
-\author{Lyubomir Shoylev}
+% \title{This is a title}
+% \author{Lyubomir Shoylev, \texttt{shil5377}}
 
-\maketitle
+% \maketitle
+
+\begin{center}
+	\Large{\textbf{CO31: Structure of white dwarf stars}\\
+	\vspace{1em}
+	\large{Lyubomir Shoylev, \texttt{shil5377}}\\ \href{mailto:me@example.com}{\texttt{lyubomir.shoylev@st-hildas.ox.ac.uk}}}\\
+	\large{St Hilda's College}\\
+	\today
+\end{center}
 
 \begin{abstract}
 	This will be the abstract of the report. It shall be written when the rest is nearly done.
 \end{abstract}
 
 \section{Introduction}
-%Section 1 - Introduction
-Here is a quick summary of what is to unfold:
-\begin{equation}
-	\dd U = T\dd S - P \dd V - P \partial V
-\end{equation}
-\begin{equation}
-	\frac{\dd^2}{\dd r^2}\left(\int_{a}^{r} \dd r' r'\right) = r^2
-\end{equation}
-\begin{equation}
-	\vec{y}
-\end{equation}
-bla bla bla bla bla fasfsdfdsa
-new stuff here to see if recipe works
+	In this experiment the goal is to study the internal structure of white dwarf stars. They are one possible end state in the life cycle of stars. What is particular about white dwarf stars is that the matter comprising them is different to the matter in a usual star similar to the Sun. While in a usual stable star the equilibrium is supported by fusion energy and the pressure of the plasma, a white dwarf star has exhausted its fuel and the equilibrium is supported by electron degeneracy pressure, making the star extremely dense; for example, a white dwarf of 1 solar mass is about the size of Earth. In this report, we will first derive the coupled differential equations for mass and density in a spirit similar to \cite{chandrasekhar-white-dwarf} in Section \ref{sec:theroy-white-dwarfs}. Then, in Section \ref{sec:numerical-approach} we develop the numerical method used to solve the coupled equations. Results and discussion take place in Section \ref{sec:results-and-discussion}. Finally, we give a summary of the experiment and possible improvements in Section \ref{sec:summary}.
+	%======================= decide if the last sentence is ok
 
-
-
-\section{Theory of white dwarf stars}
-%Section 2 - Theory of white dwarf stars
-Stars usually are spherous objects of plasma, which are held together by gravity. While gravity tries to compress the ball into a smaller size, the gaseous plasma opposes this force with the pressure it exerts. When the two forces balance eachother out the star is in equilibrium. In traditional stars, the pressure is hydrostatic (i.e. due to the high density of the gas) or radiative (from energy radiated away). In white dwarf stars however, the densities are far greater than the ones in usual stars, and matter behaves differently. All electrons are no longer bound to atoms and are free to roam. This behaviour is approximatelly decribed by a Fermi gas of electrons at zero Kelvin (i.e. fully degenerate state).
+\section{Theory of white dwarf stars}\label{sec:theroy-white-dwarfs}
+	Stars usually are spherous objects of plasma, which are held together by gravity. While gravity tries to compress the ball into a smaller size, the gaseous plasma opposes this force with the pressure it exerts. When the two forces balance eachother out the star is in equilibrium. In traditional stars, the pressure is hydrostatic (i.e. due to the high density of the gas) or radiative (from energy radiated away). In white dwarf stars however, the densities are far greater than the ones in usual stars, and matter behaves differently. All electrons are no longer bound to atoms and are free to roam. This behaviour is approximatelly decribed by a Fermi gas of electrons at zero Kelvin (i.e. fully degenerate state).
 
 \subsection{Equation of equilibrium}\label{subsec:test}
-%		- Equation of equilibrium
-Assume the star is spherically symmetric, in equilibrium, non-rotating and the effect of magnetic fields is negligible. Therefore, all properties depend only on the distance to the centre of the star, $r$. The gravitational force on a small volume of matter with area $\dd A$ and radial height $\dd r$ is:
-\begin{equation}
-	F_\mathrm{G} = - \frac{G m\left(r\right) \dd m}{r^2},
-\end{equation}
-where $m\left(r\right)$ is the mass contained up to $r$, $\dd m = \dd A \dd r \rho \left(r\right)$ is the mass of the small volume and the density $\rho \left(r\right)$ was assumed constant (negative sign because it pulls it towards the centre). The force due to the pressure is the difference of the forces at $r$ and $r + \dd r$:
-\begin{equation}
+	%		- Equation of equilibrium
+	Assume the star is spherically symmetric, in equilibrium, non-rotating and the effect of magnetic fields is negligible. Therefore, all properties depend only on the distance to the centre of the star, $r$. The gravitational force on a small volume of matter with area $\dd A$ and radial height $\dd r$ is:
+	\begin{equation}
+		F_\mathrm{G} = - \frac{G m\left(r\right) \dd m}{r^2},
+	\end{equation}
+	where $m\left(r\right)$ is the mass contained up to $r$, $\dd m = \dd A \dd r \rho \left(r\right)$ is the mass of the small volume and the density $\rho \left(r\right)$ was assumed constant (negative sign because it pulls it towards the centre). The force due to the pressure is the difference of the forces at $r$ and $r + \dd r$:
+	\begin{equation}
 	F_\mathrm{P} = \left( P\left(r\right) - P\left(r + \dd r\right)\right) \dd A.
-\end{equation}
-For a star in equilibrium the two forces balance eachother out, i.e. $F_\mathrm{G} + F_\mathrm{P} = 0$. After a bit of rearranging, we get:
-\begin{equation} \label{eqn:hydrostat-equil}
-	\frac{\dd P(r)}{\dd r} = \frac{P\left(r + \dd r\right) - P\left(r\right)}{\dd r} = - \frac{G \rho(r) m(r)}{r^2}.
-\end{equation}
-We can rewrite the hydrostatic equilibrium by using the chain rule:
-\begin{equation}
-	\frac{\dd P(r)}{\dd r} = \frac{\dd P}{\dd \rho} \frac{\dd \rho}{\dd r},
-\end{equation}
-so equation \eqref{eqn:hydrostat-equil} becomes:
-\begin{equation}\label{eqn:hydrostat-equil-rhor}
-	\frac{\dd \rho}{\dd r} = - \frac{\dd \rho}{\dd P} \frac{G \rho(r) m(r)}{r^2}.
-\end{equation}
+	\end{equation}
+	For a star in equilibrium the two forces balance eachother out, i.e. $F_\mathrm{G} + F_\mathrm{P} = 0$. After a bit of rearranging, we get:
+	\begin{equation} \label{eqn:hydrostat-equil}
+		\frac{\dd P(r)}{\dd r} = \frac{P\left(r + \dd r\right) - P\left(r\right)}{\dd r} = - \frac{G \rho(r) m(r)}{r^2}.
+	\end{equation}
+	We can rewrite the hydrostatic equilibrium by using the chain rule:
+	\begin{equation}
+		\frac{\dd P(r)}{\dd r} = \frac{\dd P}{\dd \rho} \frac{\dd \rho}{\dd r},
+	\end{equation}
+	so equation \eqref{eqn:hydrostat-equil} becomes:
+	\begin{equation}\label{eqn:hydrostat-equil-rhor}
+		\frac{\dd \rho}{\dd r} = - \frac{\dd \rho}{\dd P} \frac{G \rho(r) m(r)}{r^2}.
+	\end{equation}
 
-On the other hand, the equation for the inscribed mass is:
-\begin{equation}\label{eqn:mass-dEq}
-	m(r) = \int_0^r \dd r' 4 \pi^2 r' \rho\left(r'\right) \quad \Rightarrow \quad \frac{\dd m}{\dd r} = 4 \pi r^2 \rho(r)
-\end{equation}
-We are now left with two coupled differential equations, \eqref{eqn:hydrostat-equil-rhor} and \eqref{eqn:mass-dEq}. Only job left to do is to determine $\frac{\dd P}{\dd \rho}$, which depends on the equation of state.
+	On the other hand, the equation for the inscribed mass is:
+	\begin{equation}\label{eqn:mass-dEq}
+		m(r) = \int_0^r \dd r' 4 \pi^2 r' \rho\left(r'\right) \quad \Rightarrow \quad \frac{\dd m}{\dd r} = 4 \pi r^2 \rho(r)
+	\end{equation}
+	We are now left with two coupled differential equations, \eqref{eqn:hydrostat-equil-rhor} and \eqref{eqn:mass-dEq}. Only job left to do is to determine $\frac{\dd P}{\dd \rho}$, which depends on the equation of state.
 
 \subsection{Equation of state}
-%		- Equation of state - non-relativistic and relativistic (derive to common form)
-We assume the star is made up primatrily of heavy $^{56}$Fe nuclei and their electrons. The nuclei carry most of the mass and little of the pressure, while the opposite is true for the electrons. Since we consider \emph{very~high} densities, we can approximate that the nuclei are stationary while the elctrons move freely not bound to any nuclei. A good model for the freely moving electron gas is the free Fermi gas at $T = \SI{0}{K}$.
+	%		- Equation of state - non-relativistic and relativistic (derive to common form)
+	We assume the star is made up primatrily of heavy $^{56}$Fe nuclei and their electrons. The nuclei carry most of the mass and little of the pressure, while the opposite is true for the electrons. Since we consider \emph{very~high} densities, we can approximate that the nuclei are stationary while the elctrons move freely not bound to any nuclei. A good model for the freely moving electron gas is the free Fermi gas at $T = \SI{0}{K}$.
 
-Fermions obey the Pauli exclusion principle, therefore each energy level is $2S + 1$ degenerate, where $S = \frac{1}{2}$ in the case of electrons. This degeneracy factor multiplies gives the density function:
-\begin{equation}
-	g(k) = \frac{2S + 1}{2 \pi^2} V k^2,
-\end{equation}
-where $k$ is the wavevector of particles and $V$ is the volume of the system. The number density of particles can therefore be written as:
-\begin{equation}
-	n = \frac{N}{V} = \frac{1}{V} \int_0^{k_\mathrm{F}} \dd k \, g(k) = \int_0^{k_\mathrm{F}} \dd k \frac{2S + 1}{2 \pi^2} k^2.
-\end{equation}
-Here we integrate up to $k_\mathrm{F}$ where this is given by $p_\mathrm{F} = \hbar k_\mathrm{F}$ and $p_\mathrm{F}$ is the Fermi momentum. Rewrite the above equation in terms of $p$:
-\begin{equation}\label{eqn:number-density}
-	n = \int_0^{p_\mathrm{F}} \dd p \frac{2S + 1}{2 \pi^2 \hbar^3} p^2 = \int_0^{p_\mathrm{F}} \dd p \frac{8 \pi}{h^3} p^2 = \int_0^{p_\mathrm{F}} \dd p \, n(p) = \frac{8 \pi}{h^3} p_\mathrm{F}^3
-\end{equation}
-where we define $n(p) \dd p$ as the number of electrons per unit volume with momentum between $p$ and $p + \dd p$.
+	Fermions obey the Pauli exclusion principle, therefore each energy level is $2S + 1$ degenerate, where $S = \frac{1}{2}$ in the case of electrons. This degeneracy factor multiplies gives the density function:
+	\begin{equation}
+		g(k) = \frac{2S + 1}{2 \pi^2} V k^2,
+	\end{equation}
+	where $k$ is the wavevector of particles and $V$ is the volume of the system. The number density of particles can therefore be written as:
+	\begin{equation}
+		n = \frac{N}{V} = \frac{1}{V} \int_0^{k_\mathrm{F}} \dd k \, g(k) = \int_0^{k_\mathrm{F}} \dd k \frac{2S + 1}{2 \pi^2} k^2.
+	\end{equation}
+	Here we integrate up to $k_\mathrm{F}$ where this is given by $p_\mathrm{F} = \hbar k_\mathrm{F}$ and $p_\mathrm{F}$ is the Fermi momentum. Rewrite the above equation in terms of $p$:
+	\begin{equation}\label{eqn:number-density}
+		n = \int_0^{p_\mathrm{F}} \dd p \frac{2S + 1}{2 \pi^2 \hbar^3} p^2 = \int_0^{p_\mathrm{F}} \dd p \frac{8 \pi}{h^3} p^2 = \int_0^{p_\mathrm{F}} \dd p \, n(p) = \frac{8 \pi}{h^3} p_\mathrm{F}^3
+	\end{equation}
+	where we define $n(p) \dd p$ as the number of electrons per unit volume with momentum between $p$ and $p + \dd p$.
 
-Pressure, on the other hand, we get from the kinetic expression:
-\begin{equation}\label{eqn:pressure-int}
-	P = \frac{1}{3} \int_0^{p_\mathrm{F}} p v_p n(p) \dd p.
-\end{equation}
-Here comes the point where we differentiaite between non-relativistic and relativistic case - $v_p$ has different value:
-\begin{equation}
-	v_p = \begin{cases}
-		\frac{p}{m_\mathrm{e}} &, \text{non-relativistic case} \\
-		\frac{pc}{\sqrt{p^2c^2 + m_\mathrm{e}^2 c^4}} &, \text{relativistic case.}
-	\end{cases}
-\end{equation}
+	Pressure, on the other hand, we get from the kinetic expression:
+	\begin{equation}\label{eqn:pressure-int}
+		P = \frac{1}{3} \int_0^{p_\mathrm{F}} p v_p n(p) \dd p.
+	\end{equation}
+	Here comes the point where we differentiaite between non-relativistic and relativistic case - $v_p$ has different value:
+	\begin{equation}
+		v_p = \begin{cases}
+			\frac{p}{m_\mathrm{e}} &, \text{non-relativistic case} \\
+			\frac{pc}{\sqrt{p^2c^2 + m_\mathrm{e}^2 c^4}} &, \text{relativistic case.}
+		\end{cases}
+	\end{equation}
 
-Let us first work out the answer in the non-relativistic case. The integral becomes $\text{const} \times \int p^4 \dd p$, so the pressure becomes:
-\begin{equation}
-	P_\mathrm{non} = \frac{8 \pi}{15 h^3 m_e} p_\mathrm{F}^5.
-\end{equation}
-For the relativistic case, rather than do the integral for P, differentiaite it by parts so to not compute the difficult integral. Differentiating \eqref{eqn:pressure-int}:
-\begin{equation}
-	\frac{\dd P_\mathrm{rel}}{\dd \rho} = \frac{\dd P_\mathrm{rel}}{\dd p_\mathrm{F}} \frac{\dd p_\mathrm{F}}{\dd \rho}, \quad \frac{\dd P_\mathrm{rel}}{\dd p_\mathrm{F}} = \frac{8\pi}{3h^3}\frac{\dd}{\dd p_\mathrm{F}}\int_0^{p_\mathrm{F}} \frac{p^4 c}{\sqrt{p^2c^2 + m_e^2 c^4}} \dd p = \frac{8\pi}{3h^3} \frac{p_\mathrm{F}^4 c}{\sqrt{p_\mathrm{F}^2c^2 + m_e^2 c^4}}
-\end{equation}
-What is left is expressing $p_\mathrm{F} (\rho)$ to complete the equation of state in the form needed by \eqref{eqn:hydrostat-equil-rhor}. The relation between density and number density can be stated as $\rho = \mu m_\mathrm{p} n$, where $\mu$ is the mean molecular weight per electron and $m_\mathrm{p}$ is the mass of 1 proton. In our case, we can approximate $\mu \approx 2$. Using this relation and \eqref{eqn:number-density}, we arrive at:
-\begin{equation}
-	p_\mathrm{F} = \left( \frac{h^3}{8 \pi} n \right)^{1/3} = \left( \frac{h^3}{16 \pi m_\mathrm{p}} \rho\right)^{1/3} \quad \Rightarrow \quad \frac{\dd p_\mathrm{F}}{\dd \rho} = \frac{2}{3} \left( \frac{h^3}{16 \pi m_\mathrm{p}}\right)^{1/3} \rho^{-2/3}
-\end{equation}
+	Let us first work out the answer in the non-relativistic case. The integral becomes $\text{const} \times \int p^4 \dd p$, so the pressure becomes:
+	\begin{equation}
+		P_\mathrm{non} = \frac{8 \pi}{15 h^3 m_e} p_\mathrm{F}^5.
+	\end{equation}
+	For the relativistic case, rather than do the integral for P, differentiaite it by parts so to not compute the difficult integral. Differentiating \eqref{eqn:pressure-int}:
+	\begin{equation}
+		\frac{\dd P_\mathrm{rel}}{\dd \rho} = \frac{\dd P_\mathrm{rel}}{\dd p_\mathrm{F}} \frac{\dd p_\mathrm{F}}{\dd \rho}, \quad \frac{\dd P_\mathrm{rel}}{\dd p_\mathrm{F}} = \frac{8\pi}{3h^3}\frac{\dd}{\dd p_\mathrm{F}}\int_0^{p_\mathrm{F}} \frac{p^4 c}{\sqrt{p^2c^2 + m_e^2 c^4}} \dd p = \frac{8\pi}{3h^3} \frac{p_\mathrm{F}^4 c}{\sqrt{p_\mathrm{F}^2c^2 + m_e^2 c^4}}
+	\end{equation}
+	What is left is expressing $p_\mathrm{F} (\rho)$ to complete the equation of state in the form needed by \eqref{eqn:hydrostat-equil-rhor}. The relation between density and number density can be stated as $\rho = \mu m_\mathrm{p} n$, where $\mu$ is the mean molecular weight per electron and $m_\mathrm{p}$ is the mass of 1 proton. In our case, we can approximate $\mu \approx 2$. Using this relation and \eqref{eqn:number-density}, we arrive at:
+	\begin{equation}
+		p_\mathrm{F} = \left( \frac{h^3}{8 \pi} n \right)^{\sfrac{1}{3}} = \left( \frac{h^3}{16 \pi m_\mathrm{p}} \rho\right)^{\sfrac{1}{3}} \quad \Rightarrow \quad \frac{\dd p_\mathrm{F}}{\dd \rho} = \frac{1}{3} \left( \frac{h^3}{16 \pi m_\mathrm{p}}\right)^{\sfrac{1}{3}} \rho^{-\sfrac{2}{3}}
+	\end{equation}
 
 \subsection{Full solution}
 %		- Full solution - to use for reference in subsequent plots (and reference appendix for derivation)
 
 
-\section{Numerical approach}
-%Section 3 - Numerical approach
-To find the radius and mass of the star as a function of it's central density, we will numerically integrate the coupled system. The distance $r$ at which $\rho (r=R) \approx 0$ is where the star ends; the mass is therefore $m(R)$ where $m(r)$ is the inscribed mass, as defined in \eqref{eqn:mass-dEq}. Physically, we can consider solving the equation as an initial value problem. First, write the coupled system in vector form:
-\begin{equation}
-	\vec{y} = \begin{pmatrix}
-		\rho \\
-		m
-	\end{pmatrix},
-\end{equation}
-and the derivatives of its members with respect ro $r$ given by \eqref{eqn:hydrostat-equil-rhor} and \eqref{eqn:mass-dEq}. Then, for a given central density $\rho_\mathrm{c}$ the initial condition for the mass is specified by $m(\delta r) = \frac{4}{3} \pi (\delta r)^3 \rho_\mathrm{c}$ for some small distance from the centre $\delta r$.
+\section{Numerical approach}\label{sec:numerical-approach}
+	%Section 3 - Numerical approach
+	To find the radius and mass of the star as a function of it's central density, we will numerically integrate the coupled system. The distance $r$ at which $\rho (r=R) \approx 0$ is where the star ends; the mass is therefore $m(R)$ where $m(r)$ is the inscribed mass, as defined in \eqref{eqn:mass-dEq}. Physically, we can consider solving the equation as an initial value problem. First, write the coupled system in vector form:
+	\begin{equation}
+		\vec{y} = \begin{pmatrix}
+			\rho \\
+			m
+		\end{pmatrix},
+	\end{equation}
+	and the derivatives of its members with respect ro $r$ given by \eqref{eqn:hydrostat-equil-rhor} and \eqref{eqn:mass-dEq}. Then, for a given central density $\rho_\mathrm{c}$ the initial condition for the mass is specified by $m(\delta r) = \frac{4}{3} \pi (\delta r)^3 \rho_\mathrm{c}$ for some small distance from the centre $\delta r$.
 \subsection{Why integration?}
-%		- Why integration
-Since we have an initial value problem, the underlying idea is the following --- rewrite the derivatives as fractions of finite differences, and get $\Delta \vec{y} = \frac{\dd \vec{y}(x)}{\dd x} \Delta x$. This is the change in $\vec{y}$ when we step through by $\Delta x$. When the step is very small, the approximation is very good, i.e. $\lim_{\Delta x \rightarrow \dd x} \Delta \vec{y} = \dd \vec{y}$.
+	%		- Why integration
+	Since we have an initial value problem, the underlying idea is the following --- rewrite the derivatives as fractions of finite differences, and get $\Delta \vec{y} = \frac{\dd \vec{y}(x)}{\dd x} \Delta x$. This is the change in $\vec{y}$ when we step through by $\Delta x$. When the step is very small, the approximation is very good, i.e. $\lim_{\Delta x \rightarrow \dd x} \Delta \vec{y} = \dd \vec{y}$.
 
-The basic idea boils down to the most elementary such method --- Euler's method:
-\begin{align}
-	\vec{y}_\mathrm{n+1} &= \vec{y}_\mathrm{n} + h \vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n})\\
-	x_\mathrm{n+1} &= x_\mathrm{n} + h, \nonumber
-\end{align}
-where the vector function is just $\vec{f} = \frac{\dd \vec{y}(x)}{\dd x}$ i.e. the slope at $x_\mathrm{n}$. This is a first order method: the local error is $\sim h^2$ and the global error therefore is $\sim h$. This method has only one computation of the derivative and is therefore very fast, but also very innacurate, as seen above.
+	The basic idea boils down to the most elementary such method --- Euler's method:
+	\begin{align}
+		\vec{y}_\mathrm{n+1} &= \vec{y}_\mathrm{n} + h \vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n})\\
+		x_\mathrm{n+1} &= x_\mathrm{n} + h, \nonumber
+	\end{align}
+	where the vector function is just $\vec{f} = \frac{\dd \vec{y}(x)}{\dd x}$ i.e. the slope at $x_\mathrm{n}$. This is a first order method: the local error is $\sim h^2$ and the global error therefore is $\sim h$. This method has only one computation of the derivative and is therefore very fast, but also very innacurate, as seen above.
 
-A similar explicit second order method is Heun's method (trapezoid rule):
-\begin{align}
-	\vec{y}_\mathrm{n+1} &= \vec{y}_\mathrm{n} + \frac{1}{2} h \Big(\vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n}) + \vec{f}\big(x_\mathrm{n} + h, \vec{y}_\mathrm{n} + \vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n})\big)\Big)\\
-	x_\mathrm{n+1} &= x_\mathrm{n} + h, \nonumber
-\end{align}
-Here the local error is $\sim h^3$ and the global error therefore is $\sim h^2$.
+	A similar explicit second order method is Heun's method (trapezoid rule):
+	\begin{align}
+		\vec{y}_\mathrm{n+1} &= \vec{y}_\mathrm{n} + \frac{1}{2} h \Big(\vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n}) + \vec{f}\big(x_\mathrm{n} + h, \vec{y}_\mathrm{n} + \vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n})\big)\Big)\\
+		x_\mathrm{n+1} &= x_\mathrm{n} + h, \nonumber
+	\end{align}
+	Here the local error is $\sim h^3$ and the global error therefore is $\sim h^2$.
 
-The method we use is the 4th order Runge-Kutta (RK) method. It features four evaluations of the derivative and a global error $\sim h^4$, offering a balance between computational time and accuracy. This method takes values for the slope at four different positions and estimates the step size by weighted average of these four steps. In equations:
-\begin{align*}
-	\vec{k_1} &= h \vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n})\\
-	\vec{k_2} &= h \vec{f}\left(x_\mathrm{n} + \frac{1}{2} h, \vec{y}_\mathrm{n} + \frac{1}{2}\vec{k_1}\right)\\
-	\vec{k_3} &= h \vec{f}\left(x_\mathrm{n} + \frac{1}{2} h, \vec{y}_\mathrm{n} + \frac{1}{2}\vec{k_2}\right)\\
-	\vec{k_4} &= h \vec{f}(x_\mathrm{n} + h, \vec{y}_\mathrm{n} + \vec{k_3}).
-\end{align*}
-Finally, the new position is calculated as:
-\begin{equation}
-	\vec{y}_\mathrm{n+1} = \vec{y}_\mathrm{n} + \frac{1}{6} \vec{k_1} + \frac{1}{3} \vec{k_2} + \frac{1}{3} \vec{k_3} + \frac{1}{6} \vec{k_4}.
-\end{equation}
-The RK methods family gives approximate solutions to $N$th order by varying the weights in the $\vec{k}$ expressions and the final expression to mathc coefficients in the Taylor expansion.
+	The method we use is the 4th order Runge-Kutta (RK) method. It features four evaluations of the derivative and a global error $\sim h^4$, offering a balance between computational time and accuracy. This method takes values for the slope at four different positions and estimates the step size by weighted average of these four steps. In equations:
+	\begin{align*}
+		\vec{k_1} &= h \vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n})\\
+		\vec{k_2} &= h \vec{f}\left(x_\mathrm{n} + \frac{1}{2} h, \vec{y}_\mathrm{n} + \frac{1}{2}\vec{k_1}\right)\\
+		\vec{k_3} &= h \vec{f}\left(x_\mathrm{n} + \frac{1}{2} h, \vec{y}_\mathrm{n} + \frac{1}{2}\vec{k_2}\right)\\
+		\vec{k_4} &= h \vec{f}(x_\mathrm{n} + h, \vec{y}_\mathrm{n} + \vec{k_3}).
+	\end{align*}
+	Finally, the new position is calculated as:
+	\begin{equation}
+		\vec{y}_\mathrm{n+1} = \vec{y}_\mathrm{n} + \frac{1}{6} \vec{k_1} + \frac{1}{3} \vec{k_2} + \frac{1}{3} \vec{k_3} + \frac{1}{6} \vec{k_4}.
+	\end{equation}
+	The RK methods family gives approximate solutions to $N$th order by varying the weights in the $\vec{k}$ expressions and the final expression to mathc coefficients in the Taylor expansion.
 
-{\color{red} MENTION STIFF EQUATIONS.}
+	{\color{red} MENTION STIFF EQUATIONS.}
 
 \subsection{Evaluation of methods}
-%		- Evaluation of methods - euler, heun, rk4
-plots of the stuff that I did
+	%		- Evaluation of methods - euler, heun, rk4
+	plots of the stuff that I did
 \subsection{Normalization of the equation for the white dwarf}
-%		- Normalization - take into form that is implemented in the program
-To give the computer the calculations, we will go to dimensionless quantities in the differential equation. Derivation is as follows:
+	%		- Normalization - take into form that is implemented in the program
+	To give the computer the calculations, we will go to dimensionless quantities in the differential equation. Derivation is as follows:
 
 \subsection{Convergence and iterations}
-%		- Convergence => determine number of steps
-What is left is to choose the coarsness in the grid of $\xi$. We know that for some $\Delta \xi$ small enough, the answers will converge to $\approx$ a single value. Test this by experimental runs at three different central densities --- two at the end of the interval and 1 in the middle. 
+	%		- Convergence => determine number of steps
+	What is left is to choose the coarsness in the grid of $\xi$. We know that for some $\Delta \xi$ small enough, the answers will converge to $\approx$ a single value. Test this by experimental runs at three different central densities --- two at the end of the interval and 1 in the middle.
 
-\section{Results and discussion}
+\section{Results and discussion}\label{sec:results-and-discussion}
 %Section 4 - Results and discussion
 %		- state how much of the parameter space was studied
 %		- R(rhoC)
@@ -198,13 +195,50 @@ What is left is to choose the coarsness in the grid of $\xi$. We know that for s
 %		-- discuss the results and their implications about nature of white dwarfs, relation to stellar evolution i.e. implications of the limit, relation to other compact objects neutron stars/BHs.
 
 
-\section{Conclusions}
-%Section 5 - Conclusion
+\section{Summary}\label{sec:summary}
+%Section 5 - Summary
 %		- present task, method, and result
 %		- propose directions of improvement on:
 %			- numerical approach
 %			- physics of white dwarfs
-%References
+
+%References - placeholder for now
+	\begin{thebibliography}{9}
+		
+		\bibitem{labscript}
+		Various,
+		\textit{OP14: Fraunhofer diffraction},
+		Oxford Physics,
+		January 2019.	
+		
+		\bibitem{chandrasekhar-white-dwarf}
+		Chandrasekhar S.,
+		\textit{Sth},
+		Publication,
+		Year.
+
+		\bibitem{eso-vlt}
+		Richard J, Bacon R, et al.
+		\textit{MUSE User Manual},
+		Document Version 11.3,
+		"\url{http://www.eso.org/sci/facilities/paranal/instruments/muse/doc.html}"
+		December 2019.
+		
+		\bibitem{hecht}
+		Hecht E,
+		\textit{Optics},
+		Addison-Wesley, Massachusetts,
+		4th edition (international),
+		2002.
+		
+		\bibitem{experim-err}
+		Various,
+		\textit{Estimating experimental errors},
+		Oxford Physics,
+		August 2011.
+		
+	\end{thebibliography}
+
 \appendix
 \section{Source code}
 %Appendix A - source code
