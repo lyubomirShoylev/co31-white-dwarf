@@ -1,8 +1,13 @@
+## Python stuff
 /.spyproject/
 /__pycache__/
 /**/__pycache__/
+
+## Data
 *.csv
 *.xlsx
+
+## VS Code
 /.vscode/
 
 ## Core latex/pdflatex auxiliary files:
