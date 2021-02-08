@@ -84,8 +84,7 @@ class whiteDwarf(ode.ODEinit):
         if regime == 1:
             func = lambda a, b: derivatives.nonRelativGas(a, b, self.const1)
         elif regime == 2:
-            func = lambda a, b: derivatives.relativGas(a, b, self.const1,
-                                                         self.const2)
+            func = lambda a, b: derivatives.relativGas(a, b, self.const1, self.const2)
         elif regime == 3:
             func = lambda a, b: derivatives.ultraRel(a, b, self.const1)
         
