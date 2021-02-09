@@ -47,7 +47,7 @@ def SHO(x: float, y: np.ndarray) -> np.ndarray:
     The equation `z''(x) + z(x) = 0` is written using `p = z'` in the form:
     `y' = [p, z]' = [-z, p]`. The funtion returns the latter vector.
     """
-    return np.array([-1.0*y[1], y[0]])
+    return np.array([-4*np.pi*np.pi*y[1], y[0]])
 
 def nonRelativGas(x: float, y: np.ndarray, const: float) -> np.ndarray:
     """

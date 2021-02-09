@@ -145,29 +145,34 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     Brian P. Flannery. "Numerical Recipes : The Art of Scientific Computing."
     Third ed. Cambridge, 2007.
     """
-    # TODO ask/look up if this actually improved anything
+    # TODO think of fix
     try:
-        # Old implementation, uses more cycles and memory (allegedly)
-        # k1 = h*deriv(x,y)
-        # k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
-        # k3 = h*deriv(x + 0.5*h, y + 0.5*k2)
-        # k4 = h*deriv(x + h, y + k3)
-        hh = 0.5*h
-        h6 = h/6.0
-        xh = x + hh
-        k1 = deriv(x, y)
-        yTemp = y + hh*k1
-        k2 = deriv(xh, yTemp)
-        yTemp = y + hh*k2
-        k3 = deriv(xh, yTemp)
-        yTemp = y + k3
-        k3 += k2
-        k2 = deriv(x+h, yTemp)
+        # USE OLD implementation, uses more cycles and memory (allegedly)
+        k1 = h*deriv(x,y)
+        k2 = h*deriv(x + 0.5*h, y + 0.5*k1)
+        k3 = h*deriv(x + 0.5*h, y + 0.5*k2)
+        k4 = h*deriv(x + h, y + k3)
+        
+        # 'FASTER' implementation - produced an error while running tests on 
+        # the SHO for the report, revert to the more abstract version - some
+        # cycles but sure it is correct
+
+        # hh = 0.5*h
+        # h6 = h/6.0
+        # xh = x + hh
+        # k1 = deriv(x, y)
+        # yTemp = y + hh*k1
+        # k2 = deriv(xh, yTemp)
+        # yTemp = y + hh*k2
+        # k3 = deriv(xh, yTemp)
+        # yTemp = y + k3
+        # k3 += k2
+        # k2 = deriv(x+h, yTemp)
     except ValueError:
         raise ValueError("Invalid integration, terminate integration!")
 
-    # return y + (k1 + k4)/6.0 + (k2 + k3)/3.0
-    return y + h6*(k1 + k2 + 2*k3)
+    return y + (k1 + k4)/6.0 + (k2 + k3)/3.0
+    # return y + h6*(k1 + k2 + 2*k3)
 
 # dictionary to choose integrator; for neater code in modules.ode
 index = {1: euler, 2: heun, 3: rk4}
