@@ -9,6 +9,8 @@ from multiprocessing import Pool, cpu_count
 
 # for saving files to csv (easier than the numpy implementation)
 import pandas as pd
+# solar mass for output scale
+from astropy.constants import M_sun
 # for setup of integration grid
 from numpy.core.function_base import linspace
 
@@ -26,7 +28,7 @@ def starInitNonRelativ(myTuple):
 
     radius, mass = star.getRadiusMass()
     # return the three values No of iter, radius in km/1000, mass in solar mass
-    return [n, radius/1000, mass/1.988e30]
+    return [n, radius/1000, mass/M_sun.value]
 
 # Direct copy of the method in main.py, only added a variable for the number of
 # intervals in the space (since we are probing it).
@@ -38,7 +40,7 @@ def starInitRelativ(myTuple):
 
     radius, mass = star.getRadiusMass()
     # return the three values No of iter, radius in km/1000, mass in solar mass
-    return [n, radius/1000, mass/1.988e30]
+    return [n, radius/1000, mass/M_sun.value]
 
 numberOfIterations = [int(float(a)*10**b) for b in range(2,8) for a in [1,2,4,8]]
 
