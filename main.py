@@ -9,14 +9,16 @@ from multiprocessing import Pool, cpu_count
 
 # TODO look at usage below
 import numpy as np
+# for saving files to csv (easier than the numpy implementation)
+import pandas as pd
+# solar mass for output scale
+from astropy.constants import M_sun
 # for setup of integration grid
 from numpy.core.function_base import linspace
 
-# for saving files to csv (easier than the numpy implementation)
-import pandas as pd
-
 # our white dwarf integrator module
 import modules
+
 
 # Initialize a white dwarf with non-relativistic equation of state
 def starInitNonRelativ(rhoC):
@@ -37,14 +39,14 @@ def starInitNonRelativ(rhoC):
     """
     # Integration grid, optimal step size determined on convergence ground
     # for more info look at convergence.py
-    span = linspace(1,8.1e7,num=81000000)
+    span = linspace(1,8.1e7,num=2000000)
     # Initialize the white dwarf and integrate
     star = modules.whiteDwarf(rhoC, span, 1)
     star.integrate(3)
 
     radius, mass = star.getRadiusMass()
     # return the three values rho in kg*m^(-3), radius in km/1000, mass in solar mass
-    return [rhoC, radius/1000, mass/1.988e30]
+    return [rhoC, radius/1000, mass/M_sun.value]
 
 # Initialize a white dwarf with relativistic equation of state
 def starInitRelativ(rhoC):
@@ -65,14 +67,14 @@ def starInitRelativ(rhoC):
     """
     # Integration grid, optimal step size determined on convergence ground
     # for more info look at convergence.py
-    span = linspace(1,8.1e7,num=81000000)
+    span = linspace(1,8.1e7,num=2000000)
     # Initialize the white dwarf and integrate
     star = modules.whiteDwarf(rhoC, span, 2)
     star.integrate(3)
 
     radius, mass = star.getRadiusMass()
     # return the three values rho in kg*m^(-3), radius in km/1000, mass in solar mass
-    return [rhoC, radius/1000, mass/1.988e30]
+    return [rhoC, radius/1000, mass/M_sun.value]
 
 
 def main():
