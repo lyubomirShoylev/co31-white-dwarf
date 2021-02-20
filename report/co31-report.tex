@@ -1,6 +1,6 @@
 \documentclass[]{article}
 %%% Document layout & text formatting
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=0.5in]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
@@ -306,6 +306,11 @@
 \subsection{Convergence and iterations}\label{subsec:convergence}
 	%		- Convergence => determine number of steps
 	What is left is to choose the coarsness in the grid of $\xi$. We know that for some $\Delta \xi$ small enough, the answers will converge to $\approx$ a single value. To do this, we will make several experimental runs at three different $\rhoCentre$ --- $10$ Test this by experimental runs at three different central densities --- two at the end of the interval and 1 in the middle.
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=0.85\textwidth,keepaspectratio]{figures/convergencePlot.pdf}
+		\caption{Plot of convergence for three central spanning the tested range of $\rhoCentre$ in both non-relativistic (left column) and relativistic (right column) cases. As can be seen, convergence is slower in the relativistc case; after $10^6$ iterations good accuracy is achieved in both cases for both mass and radius values.}
+	\end{figure}
 
 \section{Results and discussion}\label{sec:results-and-discussion}
 %Section 4 - Results and discussion
@@ -314,7 +319,6 @@
 %		- mass(rhoC)
 %		- R(mass) and the Chandrasekhar limit
 %		-- discuss the results and their implications about nature of white dwarfs, relation to stellar evolution i.e. implications of the limit, relation to other compact objects neutron stars/BHs.
-
 
 \section{Summary}\label{sec:summary}
 this is a citation \cite{Sagert2005}

@@ -1,5 +1,6 @@
 # mainPlots.py
 # Plots of data for convergence and white dwarf star parameters.
+from matplotlib import colors
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -130,10 +131,47 @@ def convergencePlots():
                     loc="upper right")
 
     # save fig, clip white margins to fit on report page with caption
-    plt.savefig("megaplot.pdf", bbox_inches="tight")
+    plt.savefig("convergencePlot.pdf", bbox_inches="tight")
     
 def whiteDwarfPlots():
-    kek = 1
+    # load data
+    nonRres = pd.read_csv("nonRelativRes.csv")
+    Rres = pd.read_csv("relativRes.csv")
+
+    # fig 1 radius(rhoc)
+    plt.figure()
+    plt.plot(nonRres["rhoC"], nonRres["radiusKM"])
+    plt.plot(Rres["rhoC"], Rres["radiusKM"])
+    plt.xscale("log")
+    plt.yscale("log")
+    plt.xlabel("Central density, $\\rho_\mathrm{C}$, $\mathrm{kg} \cdot \mathrm{m}^{-3}$")
+    plt.ylabel("Radius, km")
+    plt.legend(["Non-relativistic", "Relativistic"])
+    plt.savefig("radius-rhoC.pdf")
+
+    # mass(rhoC)
+    plt.figure()
+    plt.plot(nonRres["rhoC"], nonRres["massSolMass"])
+    plt.plot(Rres["rhoC"], Rres["massSolMass"])
+    plt.axhline(1.434, c="grey")
+    plt.xscale("log")
+    plt.yscale("log")
+    plt.xlabel("Central density, $\\rho_\mathrm{C}$, $\mathrm{kg} \cdot \mathrm{m}^{-3}$")
+    plt.ylabel("Mass, $M_\mathrm{sol}$")
+    plt.legend(["Non-relativistic", "Relativistic", "Ch. Mass limit"])
+    plt.savefig("mass-rhoC.pdf")
+
+    # radius(mass)
+    plt.figure()
+    plt.plot(nonRres["massSolMass"], nonRres["radiusKM"])
+    plt.plot(Rres["massSolMass"], Rres["radiusKM"])
+    plt.axvline(1.434, c="grey")
+    plt.xlim(0, 2.1)
+    plt.ylim(0, 20000)
+    plt.xlabel("Mass, $M_\mathrm{sol}$")
+    plt.ylabel("Radius, km")
+    plt.legend(["Non-relativistic", "Relativistic", "Ch. Mass limit"])
+    plt.savefig("radius-mass.pdf")
 
 def main():
     convergencePlots()
