@@ -1,6 +1,6 @@
 \documentclass[]{article}
 %%% Document layout & text formatting
-\usepackage[margin=0.5in]{geometry}
+\usepackage[margin=0.75in]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
@@ -9,7 +9,7 @@
 \usepackage{caption}
 \captionsetup{justification=centering,font={small,sf}}
 \usepackage{subcaption}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 
 %%% Maths
 \usepackage{amsmath}
@@ -49,10 +49,10 @@
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks=true,
-	linkcolor=blue,
+	linkcolor=RoyalBlue,
 	filecolor=magenta,
-	urlcolor=cyan,
-	citecolor=blue,
+	urlcolor=Salmon,
+	citecolor=RoyalBlue,
 }
 % more options on https://www.overleaf.com/learn/latex/hyperlinks
 
@@ -83,21 +83,20 @@
 \end{abstract}
 
 \section{Introduction}
-	In this experiment the goal is to study the internal structure of white dwarf stars. They are one possible end state in the life cycle of stars. What is particular about white dwarf stars is that the matter they are composed of is different to the matter in a usual star similar to the Sun. While in a usual stable star the equilibrium is supported by fusion energy and the pressure of the plasma, a white dwarf star has exhausted its fuel and the equilibrium is supported by electron degeneracy pressure, making the star extremely dense; for example, a white dwarf of 1 solar mass is about the size of Earth. In this report, we will first derive the coupled differential equations for mass and density in a spirit similar to \cite{OxfPhys2020} and \cite{Chandrasekhar1984} in Section \ref{sec:theroy-white-dwarfs}. Then, in Section \ref{sec:numerical-approach} we develop the numerical method used to solve the coupled equations. Results and discussion take place in Section \ref{sec:results-and-discussion}. Finally, we give a summary of the experiment and possible improvements in Section \ref{sec:summary}.
+	The goal of this experiment is to study the internal structure of white dwarf stars. They are one possible end state in the life cycle of stars. What is particular about white dwarf stars is that the matter they are composed of is different from the matter in a usual star similar to the Sun. While in a usual stable star the equilibrium is supported by fusion energy and the pressure of the plasma, a white dwarf star has exhausted its fuel, and the equilibrium is supported by electron degeneracy pressure, making the star extremely dense; for example, a white dwarf of 1 solar mass is about the size of Earth. In this report, we will first derive the coupled differential equations for mass and density in a spirit similar to \cite{OxfPhys2020} and \cite{Chandrasekhar1984} in Section \ref{sec:theroy-white-dwarfs}. Then, in Section \ref{sec:numerical-approach}, we develop the numerical method used to solve the coupled equations. Results and discussion take place in Section \ref{sec:results-and-discussion}. Finally, we give a summary of the experiment and possible improvements in Section \ref{sec:summary}.
 	%======================= decide if the last sentence is ok
 
 \section{Theory of white dwarf stars}\label{sec:theroy-white-dwarfs}
-	Stars are astronomical objects with spherous shape made up of heated plasma. The force of gravity tries to compress the ball, holding the matter together, while the gaseous plasma opposes gravity with the pressure it exerts. When the two forces balance eachother out, the star is in hydrostatic equilibrium. In usual stars, pressure is due to the gas and due to the radiation (important mostly in the largest non-degenerate stars). In white dwarf stars however, the densities are far greater than the ones found in ususal stars, and matter behaves differently. All electrons are no longer bound to atoms and are free to roam. The behaviour is approximately described by a Fermi gas of electrons at zero Kelvin (i.e. fully degenerate state) and the pressure giving the equilibrium is the degeneracy pressure of the electrons.
-	% OLD - Stars usually are spherous objects of plasma, which are held together by gravity. While gravity tries to compress the ball into a smaller size, the gaseous plasma opposes this force with the pressure it exerts. When the two forces balance eachother out the star is in equilibrium. In traditional stars, the pressure is hydrostatic (i.e. due to the high density of the gas) or radiative (from energy radiated away). In white dwarf stars however, the densities are far greater than the ones in usual stars, and matter behaves differently. All electrons are no longer bound to atoms and are free to roam. This behaviour is approximatelly decribed by a Fermi gas of electrons at zero Kelvin (i.e. fully degenerate state).
+	Stars are astronomical objects with ellipsoid shape made up of heated plasma. The force of gravity tries to compress the ball, holding the matter together, while the gaseous plasma opposes gravity with the pressure it exerts. When the two forces balance each other out, the star is in hydrostatic equilibrium. In usual stars, pressure is due to the gas and the radiation (which becomes important mostly in the largest non-degenerate stars). In white dwarf stars, however, the densities are far greater than the ones found in usual stars, and matter behaves differently. All electrons are no longer bound to atoms and are free to roam. The behaviour can approximately be modelled by a Fermi gas of electrons at zero Kelvin (i.e. fully degenerate state). Hence, the pressure ensuring the equilibrium is the degeneracy pressure of the electrons.
 	% TODO more context about white dwarfs as evolutionary states of massive stars.
 
 \subsection{Equation of equilibrium}\label{subsec:test}
 	%		- Equation of equilibrium
-	Assume the star is spherically symmetric, in equilibrium, non-rotating and the effect of magnetic fields is negligible. Therefore, all properties depend only on the distance to the centre of the star, $r$. The gravitational force on a small volume of matter with area $\dd A$ and radial height $\dd r$ is:
+	Assume the star is spherically symmetric, in equilibrium, non-rotating, and the effect of magnetic fields is negligible. Therefore, all properties depend only on the distance to the centre of the star, $r$. The gravitational force on a small volume of matter with area $\dd A$ and radial height $\dd r$ is:
 	\begin{equation}
 		F_\mathrm{G} = - \frac{G m\left(r\right) \dd m}{r^2},
 	\end{equation}
-	where $m\left(r\right)$ is the mass of the star contained up to $r$, $\dd m = \dd A \dd r \rho \left(r\right)$ is the mass of the small volume and the density $\rho \left(r\right)$ was assumed constant (negative sign because it pulls towards the centre). The force due to the pressure is the difference of the forces at $r$ and $r + \dd r$:
+	where $m\left(r\right)$ is the mass of the star contained up to $r$, $\dd m = \dd A \dd r \rho \left(r\right)$ is the mass of the small volume, and the density $\rho \left(r\right)$ was assumed constant (negative sign because it pulls towards the centre). The force due to the pressure is the difference of the forces at $r$ and $r + \dd r$:
 	\begin{equation}
 	F_\mathrm{P} = \left( P\left(r\right) - P\left(r + \dd r\right)\right) \dd A.
 	\end{equation}
@@ -118,11 +117,11 @@
 	\begin{equation}\label{eqn:mass-dEq}
 		m(r) = \int_0^r \dd r' 4 \pi^2 r' \rho\left(r'\right) \quad \Rightarrow \quad \frac{\dd m}{\dd r} = 4 \pi r^2 \rho(r)
 	\end{equation}
-	We are now left with two coupled differential equations, \eqref{eqn:hydrostat-equil-rhor} and \eqref{eqn:mass-dEq}. Only job left to do is to determine $\frac{\dd P}{\dd \rho}$, which depends on the equation of state.
+	We are now left with two coupled differential equations, \eqref{eqn:hydrostat-equil-rhor} and \eqref{eqn:mass-dEq}. The last task before obtaining the full equation is to determine $\frac{\dd P}{\dd \rho}$, which depends on the equation of state.
 
 \subsection{Equation of state}
 	%		- Equation of state - non-relativistic and relativistic (derive to common form)
-	We assume the star is made up primatrily of heavy $^{56}$Fe nuclei and their electrons. The nuclei carry most of the mass and little of the pressure, while the opposite is true for the electrons. Since we consider \emph{very~high} densities, we can approximate that the nuclei are stationary while the elctrons move freely not bound to any nuclei. A good model for the freely moving electron gas is the free Fermi gas at $T = \SI{0}{K}$.
+	We assume the star is made up primarily of heavy $^{56}$Fe nuclei and their electrons. The nuclei carry most of the mass and little of the pressure, while the opposite is true for the electrons. Since \emph{very~high} densities are considered, we can approximate that the nuclei are stationary while the electrons move freely, not bound to any nuclei. A good model for the freely moving electron gas is the free Fermi gas at $T = \SI{0}{K}$. This is the fully degenerate state, in which electrons fill all energy (momentum) levels up to the Fermi energy (momentum).
 
 	Fermions obey the Pauli exclusion principle, therefore each energy level is $2S + 1$ degenerate, where $S = \frac{1}{2}$ in the case of electrons. This degeneracy factor multiplies gives the density function:
 	\begin{equation}
@@ -138,11 +137,11 @@
 	\end{equation}
 	where we define $n(p) \dd p$ as the number of electrons per unit volume with momentum between $p$ and $p + \dd p$.
 
-	Pressure, on the other hand, we get from the kinetic expression:
+	Pressure, on the other hand, is given by the kinetic expression:
 	\begin{equation}\label{eqn:pressure-int}
 		P = \frac{1}{3} \int_0^{\fermiMtm} p v_p n(p) \dd p.
 	\end{equation}
-	Here comes the point where we differentiaite between non-relativistic and relativistic case - $v_p$ has a different value in the two cases:
+	At this point we need to differentiate between non-relativistic and relativistic cases - $v_p$ has a different value in the two cases:
 	\begin{equation}
 		v_p = \begin{cases}
 			\frac{p}{\massElectron} & \text{ in the non-relativistic case} \\
@@ -154,7 +153,7 @@
 	\begin{equation}\label{eqn:pressure-non-rel}
 		P_\mathrm{non} = \frac{8 \pi}{15 h^3 \massElectron} \fermiMtm^5.
 	\end{equation}
-	For the relativistic case, rather than do the integral for P, differentiaite it by parts so to not compute the difficult integral. Differentiating \eqref{eqn:pressure-int}:
+	For the relativistic case, rather than do the integral for P involving hyperbolic functions, differentiaite \eqref{eqn:pressure-int} by parts:
 	\begin{equation}\label{eqn:pressure-rel}
 		\frac{\dd P_\mathrm{rel}}{\dd \rho} = \frac{\dd P_\mathrm{rel}}{\dd \fermiMtm} \frac{\dd \fermiMtm}{\dd \rho}, \quad \frac{\dd P_\mathrm{rel}}{\dd \fermiMtm} = \frac{8\pi}{3h^3}\frac{\dd}{\dd \fermiMtm}\int_0^{\fermiMtm} \frac{p^4 c^2}{\sqrt{p^2c^2 + \massElectron^2 c^4}} \dd p = \frac{8\pi}{3h^3} \frac{\fermiMtm^4 c}{\sqrt{\fermiMtm^2c^2 + \massElectron^2 c^4}}.
 	\end{equation}
@@ -176,7 +175,7 @@
 	\begin{equation}
 		P_\mathrm{ultra} = \frac{p \pi}{3 h^3} \int_0^{\fermiMtm} p^3 c \dd p = \frac{2 \pi c}{3 h^3} \fermiMtm^4.
 	\end{equation}
-	As noted in \cite{Chandrasekhar1984}, this leads to a specific equation for the mass with a well specified value $M_\mathrm{lim} = 5.76 \mu_{\mathrm{e}}^{-2} M_{\astrosun}$, where $M_{\astrosun}$ is one solar mass; this limit is equivalent to infinite mean density and zero radius of the star. In the approximation made above the limiting mass is $M_\mathrm{lim} \approx 1.435 M_{\astrosun}$. We can draw two important conclusions from this fact: first, there is an upper limit to masses of degenerate stars in the later stages of evolution; and second, we cannot predict the state of stars with mass $ M > M_\mathrm{lim}$ in this physical framework.
+	As noted in \cite{Chandrasekhar1984}, this leads to a specific equation for the mass with a well specified value $M_\mathrm{lim} = 5.76 \mu_{\mathrm{e}}^{-2} M_{\astrosun}$, where $M_{\astrosun}$ is one solar mass; this limit is equivalent to infinite mean density and zero radius of the star. In the approximation made above the limiting mass is $M_\mathrm{lim} \approx 1.435 M_{\astrosun}$. We can draw two important conclusions from this fact: first, there is an upper limit to masses of degenerate stars in the later stages of evolution; and second, we cannot predict the end evolutionary state of stars with mass $ M > M_\mathrm{lim}$ in this physical framework.
 
 \section{Numerical approach}\label{sec:numerical-approach}
 	%Section 3 - Numerical approach
@@ -207,7 +206,7 @@
 	\end{align}
 	Here the local error is $\sim h^3$ and the global error therefore is $\sim h^2$.
 
-	The method we use is the 4th order Runge-Kutta (RK4) method. It features four evaluations of the derivative and a global error $\sim h^4$, offering a balance between computational time and accuracy. This method takes values for the slope at four different positions and estimates the step size by weighted average of these four steps. In equations:
+	The method we will later use to compute properties of white dwarf stars is the 4th order Runge-Kutta (RK4) method. It features four evaluations of the derivative and a global error $\sim h^4$, offering a balance between computational time and accuracy. This method takes values for the slope at four different positions and estimates the step size by weighted average of these four steps. In equations:
 	\begin{align*}
 		\vec{k_1} &= h \vec{f}(x_\mathrm{n}, \vec{y}_\mathrm{n})\\
 		\vec{k_2} &= h \vec{f}\left(x_\mathrm{n} + \frac{1}{2} h, \vec{y}_\mathrm{n} + \frac{1}{2}\vec{k_1}\right)\\
@@ -227,7 +226,7 @@
 	\begin{equation}
 		\ddot{x} + \omega^2 x = 0, \quad \text{ with solution } \quad x = x_0 \cos(\omega t)
 	\end{equation}
-	where we choose $x_0 = 1$ and $\omega = 2 \pi$ so the period of oscillations is \SI{1}{s}. From some initial runs integrating the white  dwarf equation we are aware that the number of iterations relevant us is on the order of $10^{6}$ so we choose to compare the two methods on this scale (more discussion on the topic in Section \ref{subsec:convergence}).
+	where we choose $x_0 = 1$ and $\omega = 2 \pi$ so the period of oscillations is \SI{1}{s}. From some initial runs integrating the white  dwarf equation we are aware that the number of intervals relevant us is on the order of $10^{6}$ so we choose to compare the two methods on this scale (more discussion on the topic in Section \ref{subsec:convergence}).
 
 	The runs will be split into two groups. The first group is with $10^6$ time intervals of length \SI{1}{ms} for the three methods; denote the results from these runs by \eulerOne{}, \heun{}, and \rkFour{} respectively. The second group is $10^7$ time intervals of length \SI{0.1}{ms} for the Euler method to cover the same total time interval; denote results by \eulerTwo{}. Additionally, we will consider the energy in the system:
 	\begin{equation}
@@ -275,9 +274,9 @@
 
 \subsection{Dimensionless equation for the white dwarf}
 	%		- Normalization - take into form that is implemented in the program
-	To calculate values with the compute, we will go to dimensionless quantities in the differential equation. Introduce the following substitutions:
+	To calculate values with the computer, we will go to dimensionless quantities in the differential equation. Introduce the following substitutions:
 	\begin{equation}
-		\rho = \rhoCentre \theta, \quad r = \ell \xi, \quad m = \rhoCentre (\SI{1}{m^3}) \mu
+		\rho = \rhoCentre \theta, \quad r = \ell \xi, \quad m = \rhoCentre (\SI{1}{m^3}) \mu \text{, therefore } \vec{y}(r) = \begin{pmatrix}\rho(r) \\ m(r)\end{pmatrix} \rightarrow \vec{\eta}(\xi) = \begin{pmatrix}\theta(\xi)\\\mu(\xi)\end{pmatrix}.
 	\end{equation}
 	where we chage variables from $\vec{y}(r) = \begin{pmatrix}\rho(r) \\ m(r)\end{pmatrix}$ to $\vec{\eta}(\xi) = \begin{pmatrix}\theta(\xi)\\\mu(\xi)\end{pmatrix}$. We also specify the length $\ell$ by the equation $\frac{4}{3}\pi \ell^3 = \SI{1}{m^3}$, which gives a value of $\ell \approx 0.62 \sim \SI{1}{m}$. This will be useful to make some cancelations in the coefficients in the final form of the differential equation for $\vec{\eta}$.
 
@@ -301,16 +300,24 @@
 	\begin{equation}
 		K_1 = - 2^{\sfrac{13}{3}} \pi \gravconst \massElectron \massProton^{\sfrac{5}{3}} \rhoCentre^{\sfrac{1}{3}} h^{-2} , \quad \quad K_2 = \frac{1}{\massElectron^2 c^2} \left( \frac{3h^3 \rhoCentre}{16 \pi \massProton} \right)^{\sfrac{2}{3}}.
 	\end{equation}
-	We have completed the task of bringing the equation to normalized coordinates. 
+	We have completed the task of bringing the equation to normalized coordinates. This is the setup used in writing the code for the white dwarf ODE wrapper presented in \ref{subapp:WDODEwrapper}
 
-\subsection{Convergence and iterations}\label{subsec:convergence}
+\subsection{Convergence and number of intervals}\label{subsec:convergence}
 	%		- Convergence => determine number of steps
-	What is left is to choose the coarsness in the grid of $\xi$. We know that for some $\Delta \xi$ small enough, the answers will converge to $\approx$ a single value. To do this, we will make several experimental runs at three different $\rhoCentre$ --- $10$ Test this by experimental runs at three different central densities --- two at the end of the interval and 1 in the middle.
+	What is left is to choose the coarsness in the grid of $\xi$. We know that for some $\Delta \xi$ small enough, the answers will converge to $\approx$ a single value. To find the number of intervals (NoI) at which the result converges, we make experimental runs at three different $\rhoCentre$ --- $10^6$, $10^{10}$, and $10^{14}$ \si{kg.m^3} (this spans the range for which we run the experiment later), and test for a NoI in the range $\left\{a \cdot 10^b \mid a \in \{1,2,4,8\}, b \in \{2,3,\ldots 8\}\right\}$. The maximal radius is set to $8.1 \cdot 10^7$ in units of $\xi$, since this turns out to be about the maxium physical radius a white dwarf can be for the range of $\rhoCentre$ we test. Both the non-relativistic and relativistic cases are considered.
+
 	\begin{figure}[htb]
 		\centering
 		\includegraphics[width=0.85\textwidth,keepaspectratio]{figures/convergencePlot.pdf}
-		\caption{Plot of convergence for three central spanning the tested range of $\rhoCentre$ in both non-relativistic (left column) and relativistic (right column) cases. As can be seen, convergence is slower in the relativistc case; after $10^6$ iterations good accuracy is achieved in both cases for both mass and radius values.}
+		\caption{Plot of convergence for three central spanning the tested range of $\rhoCentre$ in both non-relativistic (left column) and relativistic (right column) cases. As can be seen, convergence is slower in the relativistic case; after $10^6$ intervals good accuracy is achieved in both cases for both mass and radius values. The values $M_\textrm{conv}, R_\textrm{conv}$ are computed as the average of the last three values; $\Delta M = \left| M - M_\mathrm{conv}\right|$ and $\Delta R = \left| R - R_\mathrm{conv}\right|$. Odd rows have a linear y-axis, even rows are the same plot with a logarithmic y-axis.\label{fig:convergence-results}}
 	\end{figure}
+
+	The results are presented in Figure \ref{fig:convergence-results}. We use the relative error in computed value with respect to the converged value. The latter is estimated as the average of the last three values in the caluclation, i.e. for NoI $2 \cdot 10^8$, $4 \cdot 10^8$, and $8 \cdot 10^8$; the result is $M_\textrm{conv}, R_\textrm{conv}$. The relative error is given by:
+	\begin{equation}
+		\frac{\Delta M}{M_\mathrm{conv}} = \frac{\left| M - M_\mathrm{conv}\right|}{M_\mathrm{conv}}, \quad \frac{\Delta R}{R_\mathrm{conv}} = \frac{\left| R - R_\mathrm{conv}\right|}{R_\mathrm{conv}}.
+	\end{equation}
+
+	What we aim for in our choice for the number of intervals is: on the one side, a low enough number so the computation does not take too long, and on the other side, a high enough number so an acceptable accuracy is achieved. From the logarithmic plots for the mass we can see that the error either goes to zero (the vertical line) or is fixed to $\approx$ zero for $\text{NoI} \geq 4 \cdot 10^5$. In the case of the radius determination, we see that the computed value does not really converge to a specific point; it does, however, reduce its error exponentially fast. Let us choose a desired accuracy of below $10^{-5} = 0.001 \%$, given that our model is not very accurate. From the logarithmic plots again we see that this is satisfied for $\text{NoI} \geq 2 \cdot 10^6$. Therefore, we can use this value as the NoI with a good compromise between speed and accuracy.
 
 \section{Results and discussion}\label{sec:results-and-discussion}
 %Section 4 - Results and discussion
@@ -319,6 +326,7 @@
 %		- mass(rhoC)
 %		- R(mass) and the Chandrasekhar limit
 %		-- discuss the results and their implications about nature of white dwarfs, relation to stellar evolution i.e. implications of the limit, relation to other compact objects neutron stars/BHs.
+
 
 \section{Summary}\label{sec:summary}
 this is a citation \cite{Sagert2005}
@@ -371,6 +379,7 @@ this is a citation \cite{Sagert2005}
 
 \appendix
 \section{Source code}\label{app:source-code}
+\subsection{White Dwarf ODE wrapper code}\label{subapp:WDODEwrapper}
 %Appendix A - source code
 \section{Derivations of white dwarf}\label{app:WD-derivations}
 %Appendix B - theory derivation of white dwarf concrete formulae

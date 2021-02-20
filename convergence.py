@@ -22,7 +22,7 @@ import modules
 # intervals in the space (since we are probing it).
 def starInitNonRelativ(myTuple):
     rhoC, n = myTuple
-    span = linspace(1,4.0e7,num=n)
+    span = linspace(1,8.1e7,num=n)
     star = modules.whiteDwarf(rhoC, span, 1)
     star.integrate(3)
 

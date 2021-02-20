@@ -37,8 +37,8 @@ def starInitNonRelativ(rhoC):
         Returns a three element list of the density in in kg*m^(-3), the radius
         in km/1000, and the mass in solar mass in this order.
     """
-    # Integration grid, optimal step size determined on convergence ground
-    # for more info look at convergence.py
+    # Integration grid in normalized units, optimal step size determined on
+    # convergence ground for more info look at convergence.py
     span = linspace(1,8.1e7,num=2000000)
     # Initialize the white dwarf and integrate
     star = modules.whiteDwarf(rhoC, span, 1)
