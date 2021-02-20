@@ -7,7 +7,6 @@ import pandas as pd
 
 
 def convergencePlots():
-    # TODO decide if we want ticks, e.g. plusses
     # load in data
     E6nonRelativ = pd.read_csv("convergenceE6nonRelativ.csv")
     E6Relativ = pd.read_csv("convergenceE6Relativ.csv")

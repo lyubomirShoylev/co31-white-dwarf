@@ -7,7 +7,6 @@ the ODE) by using our purpose built library and outputs them to a .csv file.
 # parallel computing library
 from multiprocessing import Pool, cpu_count
 
-# TODO look at usage below
 import numpy as np
 # for saving files to csv (easier than the numpy implementation)
 import pandas as pd
@@ -78,7 +77,6 @@ def starInitRelativ(rhoC):
 
 
 def main():
-    # TODO do we need this or just use the list as iterable?
     # the rho values to test in the range, change the list accordingly
     rhoVal = np.array([float(a)*10**b for b in range(6,15) for a in range(1,10)])
 

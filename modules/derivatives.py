@@ -19,8 +19,6 @@ Implementation Notes
 Choice of an equation of state for the white dwarf is aided by the dictionary
 `index`, mapping integer values to the integrator functions.
 """
-# TODO to implement a diff eqn ~ second power to evaluate the error in a 
-# comparable eqn to the one we are solving
 
 import numpy as np
 
@@ -145,17 +143,6 @@ def relativGas(x: float, y: np.ndarray, const1: float ,const2: float) -> np.ndar
 
     return np.array([const1*y[1]*(y[0]**(1.0/3))*(x**(-2.0))*
                         (1+const2*(y[0]**(2.0/3)))**(0.5), 3*(x**2)*y[0]])
-
-# XXX decide what to do with this - is it only for theory or computational?
-def ultraRel(x: float, y: np.ndarray, const: float) -> np.ndarray:
-    """
-    docstring - placeholder
-    """
-    if y[0] < 1e-10:
-        # need y[0] >= 0 to be exponentiated (on physical grounds as well)
-        raise ValueError
-    out = np.array([0, 0])
-    return out
 
 index = {1: nonRelativGas, 2: relativGas}
 
