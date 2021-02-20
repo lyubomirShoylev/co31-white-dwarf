@@ -15,40 +15,33 @@ def convergencePlots():
     E14nonRelativ = pd.read_csv("convergenceE14nonRelativ.csv")
     E14Relativ = pd.read_csv("convergenceE14Relativ.csv")   
 
-    # mass, non relativistic
+    # subplot setup, tighter spacing
+    f, axs = plt.subplots(4,2,figsize=(11.2,17.15),constrained_layout=False)
+
+    # mass, non-relativistic
     # values to which result converges
     e6convM = sum(E6nonRelativ["massSolMass"][-3:])/3
     e10convM = sum(E10nonRelativ["massSolMass"][-3:])/3
     e14convM = sum(E14nonRelativ["massSolMass"][-3:])/3
-    plt.set_cmap("Dark2")
+
     # plots of delta m / m_conv
-    fig1 = plt.figure()
+    plt.subplot(4,2,1)
+    plt.title("Non-relativistic case")
     plt.plot(E6nonRelativ["NoIter"], abs(E6nonRelativ["massSolMass"]-e6convM)/e6convM)
     plt.plot(E10nonRelativ["NoIter"], abs(E10nonRelativ["massSolMass"]-e10convM)/e10convM)
     plt.plot(E14nonRelativ["NoIter"], abs(E14nonRelativ["massSolMass"]-e14convM)/e14convM)
     plt.xscale("log")
-    plt.xlabel("central density $\\rho_\mathrm{C}$, $\mathrm{kg} \cdot \mathrm{m}^{-3}$")
     plt.ylabel("$\Delta M/M_\mathrm{conv}$")
-    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
-                 "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
-                 "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
-                 loc="upper right")
-    plt.savefig("nonRelativMass.pdf")
+    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$", "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$","$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"], loc="upper right")
     # second fig
-    fig2 = plt.figure()
+    plt.subplot(4,2,3)
     plt.plot(E6nonRelativ["NoIter"], abs(E6nonRelativ["massSolMass"]-e6convM)/e6convM)
     plt.plot(E10nonRelativ["NoIter"], abs(E10nonRelativ["massSolMass"]-e10convM)/e10convM)
     plt.plot(E14nonRelativ["NoIter"], abs(E14nonRelativ["massSolMass"]-e14convM)/e14convM)
     plt.xscale("log")
     plt.yscale("log")
-    plt.xlabel("central density $\\rho_\mathrm{C}$, $\mathrm{kg} \cdot \mathrm{m}^{-3}$")
     plt.ylabel("$\Delta M/M_\mathrm{conv}$")
-    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
-                 "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
-                 "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
-                 loc="upper right")
-    #plt.show()
-    plt.savefig("nonRelativMassLog.pdf")
+    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$", "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$","$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"], loc="upper right")
 
     # mass, relativistic
     # converged to values
@@ -57,32 +50,23 @@ def convergencePlots():
     e14RconvM = sum(E14Relativ["massSolMass"][-3:])/3
 
     # plots of delta m / m_conv
-    fig3 = plt.figure()
+    plt.subplot(4,2,2)
+    plt.title("Relativisitc case")
     plt.plot(E6Relativ["NoIter"], abs(E6Relativ["massSolMass"]-e6RconvM)/e6RconvM)
     plt.plot(E10Relativ["NoIter"], abs(E10Relativ["massSolMass"]-e10RconvM)/e10RconvM)
     plt.plot(E14Relativ["NoIter"], abs(E14Relativ["massSolMass"]-e14RconvM)/e14RconvM)
     plt.xscale("log")
-    plt.xlabel("central density $\\rho_\mathrm{C}$, $\mathrm{kg} \cdot \mathrm{m}^{-3}$")
     plt.ylabel("$\Delta M/M_\mathrm{conv}$")
-    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
-                 "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
-                 "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
-                 loc="upper right")
-    plt.savefig("RelativMass.pdf")
+    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$", "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$","$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"], loc="upper right")
     # log plot
-    fig4 = plt.figure()
+    plt.subplot(4,2,4)
     plt.plot(E6Relativ["NoIter"], abs(E6Relativ["massSolMass"]-e6RconvM)/e6RconvM)
     plt.plot(E10Relativ["NoIter"], abs(E10Relativ["massSolMass"]-e10RconvM)/e10RconvM)
     plt.plot(E14Relativ["NoIter"], abs(E14Relativ["massSolMass"]-e14RconvM)/e14RconvM)
     plt.xscale("log")
     plt.yscale("log")
-    plt.xlabel("central density $\\rho_\mathrm{C}$, $\mathrm{kg} \cdot \mathrm{m}^{-3}$")
     plt.ylabel("$\Delta M/M_\mathrm{conv}$")
-    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
-                 "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
-                 "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
-                 loc="upper right")
-    plt.savefig("RelativMassLog.pdf")
+    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$", "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$","$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"], loc="upper right")
 
     # radius, non relativistic
     # converged to values
@@ -91,20 +75,18 @@ def convergencePlots():
     e14convR = sum(E14nonRelativ["radiusKM"][-3:])/3
 
     # plots of delta m / m_conv
-    fig5 = plt.figure()
+    plt.subplot(425)
     plt.plot(E6nonRelativ["NoIter"], abs(E6nonRelativ["radiusKM"]-e6convR)/e6convR)
     plt.plot(E10nonRelativ["NoIter"], abs(E10nonRelativ["radiusKM"]-e10convR)/e10convR)
     plt.plot(E14nonRelativ["NoIter"], abs(E14nonRelativ["radiusKM"]-e14convR)/e14convR)
     plt.xscale("log")
-    plt.xlabel("Number of iterations")
     plt.ylabel("$\Delta R/R_\mathrm{conv}$")
     plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
                     "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
                     "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
                     loc="upper right")
-    plt.savefig("nonRelativRadius.pdf")
     # log plot
-    fig6 = plt.figure()
+    plt.subplot(427)
     plt.plot(E6nonRelativ["NoIter"], abs(E6nonRelativ["radiusKM"]-e6convR)/e6convR)
     plt.plot(E10nonRelativ["NoIter"], abs(E10nonRelativ["radiusKM"]-e10convR)/e10convR)
     plt.plot(E14nonRelativ["NoIter"], abs(E14nonRelativ["radiusKM"]-e14convR)/e14convR)
@@ -116,7 +98,6 @@ def convergencePlots():
                     "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
                     "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
                     loc="upper right")
-    plt.savefig("nonRelativRadiusLog.pdf")
 
     # radius, relativistic
     # converged to values
@@ -125,19 +106,17 @@ def convergencePlots():
     e14RconvR = sum(E14Relativ["radiusKM"][-3:])/3
 
     # plots of delta m / m_conv
-    fig7 = plt.figure()
+    plt.subplot(426)
     plt.plot(E6Relativ["NoIter"], abs(E6Relativ["radiusKM"]-e6RconvR)/e6RconvR)
     plt.plot(E10Relativ["NoIter"], abs(E10Relativ["radiusKM"]-e10RconvR)/e10RconvR)
     plt.plot(E14Relativ["NoIter"], abs(E14Relativ["radiusKM"]-e14RconvR)/e14RconvR)
     plt.xscale("log")
-    plt.xlabel("Number of iterations")
     plt.ylabel("$\Delta R/R_\mathrm{conv}$")
     plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
                     "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
                     "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
                     loc="upper right")
-    plt.savefig("RelativRadius.pdf")
-    fig8 = plt.figure()
+    plt.subplot(428)
     plt.plot(E6Relativ["NoIter"], abs(E6Relativ["radiusKM"]-e6RconvR)/e6RconvR)
     plt.plot(E10Relativ["NoIter"], abs(E10Relativ["radiusKM"]-e10RconvR)/e10RconvR)
     plt.plot(E14Relativ["NoIter"], abs(E14Relativ["radiusKM"]-e14RconvR)/e14RconvR)
@@ -149,7 +128,9 @@ def convergencePlots():
                     "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
                     "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
                     loc="upper right")
-    plt.savefig("RelativRadiusLog.pdf")
+
+    # save fig, clip white margins to fit on report page with caption
+    plt.savefig("megaplot.pdf", bbox_inches="tight")
     
 def whiteDwarfPlots():
     kek = 1
