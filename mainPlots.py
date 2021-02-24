@@ -32,7 +32,10 @@ def convergencePlots():
     plt.plot(E14nonRelativ["NoIter"], abs(E14nonRelativ["massSolMass"]-e14convM)/e14convM)
     plt.xscale("log")
     plt.ylabel("$\Delta M/M_\mathrm{conv}$")
-    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$", "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$","$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"], loc="upper right")
+    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
+            "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
+            "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
+            loc="upper right")
     # second fig
     plt.subplot(4,2,3)
     plt.plot(E6nonRelativ["NoIter"], abs(E6nonRelativ["massSolMass"]-e6convM)/e6convM)
@@ -41,7 +44,10 @@ def convergencePlots():
     plt.xscale("log")
     plt.yscale("log")
     plt.ylabel("$\Delta M/M_\mathrm{conv}$")
-    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$", "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$","$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"], loc="upper right")
+    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
+            "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
+            "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
+            loc="upper right")
 
     # mass, relativistic
     # converged to values
@@ -57,7 +63,10 @@ def convergencePlots():
     plt.plot(E14Relativ["NoIter"], abs(E14Relativ["massSolMass"]-e14RconvM)/e14RconvM)
     plt.xscale("log")
     plt.ylabel("$\Delta M/M_\mathrm{conv}$")
-    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$", "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$","$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"], loc="upper right")
+    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
+            "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
+            "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
+            loc="upper right")
     # log plot
     plt.subplot(4,2,4)
     plt.plot(E6Relativ["NoIter"], abs(E6Relativ["massSolMass"]-e6RconvM)/e6RconvM)
@@ -66,7 +75,10 @@ def convergencePlots():
     plt.xscale("log")
     plt.yscale("log")
     plt.ylabel("$\Delta M/M_\mathrm{conv}$")
-    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$", "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$","$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"], loc="upper right")
+    plt.legend(["$\\rho_\mathrm{C} = 10^6$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
+            "$\\rho_\mathrm{C} = 10^{10}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$",
+            "$\\rho_\mathrm{C} = 10^{14}$ $\mathrm{kg} \cdot \mathrm{m}^{-3}$"],
+            loc="upper right")
 
     # radius, non relativistic
     # converged to values
