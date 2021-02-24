@@ -21,7 +21,8 @@ class whiteDwarf(ode.ODEinit):
     span : np.ndarray
         The range of values of r to be calculated at. In normalized units to 
         cut down on computational time and improve calculation accuracy.
-        Expects an array with step size 1 between members.
+        Expects an array with first member = 1 for the starting central mass to
+        be correctly defined. Unit of normalization given by l (see below).
     regime : {1, 2, 3}, optional
         The regime indicates the choice of equation of state -> derivative, by
         default 1 - non-relativistic.
@@ -61,9 +62,7 @@ class whiteDwarf(ode.ODEinit):
     where rhoC is given as input by the user and `l^3*4*pi/3 = 1`. The choice 
     of l gives it a value on the order of 1, and we will choose it as our step
     size in r i.e. the step size in ksi is just 1. This is a convenient choice
-    for normalization because of the initial condition on the mass:
-    `m(l) = 4/3*pi*l^3*rhoC`. In this normalization, the initial condition
-    becomes `mu(1) = 1`.
+    for normalization.
     """
 
     def __init__(self, rhoC: float, span: np.ndarray, regime: int=1) -> None:

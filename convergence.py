@@ -1,6 +1,6 @@
 """convergence.py
 This is an auxiliary script, which helps determine the convergence of 
-computing white dwarf parameters and in turn judge the needed coarsness of 
+computing white dwarf parameters and in turn judge the needed coarseness of 
 the integration space. Many of the functions here are direct copies of the ones
 in main.py; look there for more explanation. Outputs .csv files of calculations.
 """

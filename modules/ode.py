@@ -1,5 +1,5 @@
 """
-Implementation of a generic ODE integraror.
+Implementation of a generic ODE integrator.
 """
 
 import numpy as np
@@ -27,16 +27,16 @@ class ODEinit(object):
     Attributes
     ----------
     y0 : np.ndarray
-        The initial state of the system. Passed at initalization.
+        The initial state of the system. Passed at initialization.
     deriv
-        The function `f` in a functional form. Passed at initalization.
+        The function `f` in a functional form. Passed at initialization.
     span : np.ndarray
-        The interval of values to be integrated over. Passed at initalization.
+        The interval of values to be integrated over. Passed at initialization.
         **Assumed to be equidistant!!**
     interval : float
         The size of the interval step; equal to `span[1] - span[0]`.
     yOut : np.ndarray
-        The computed values of `y` after integration. Initialized as a martix
+        The computed values of `y` after integration. Initialized as a matrix
         of zeros; if integration terminates before the end of `span`, the rest
         of the points are left as zeros.
     flagIntegrated : bool
@@ -89,8 +89,8 @@ class ODEinit(object):
 
         #cycle does the integration
         for i in range(self.span.size-1):
-            # the try exept handles the case where integration is impossible, 
-            # i.e. when the value of an element of y is unphysical. deriv
+            # the try except handles the case where integration is impossible, 
+            # i.e. when the value of an element of y is nonphysical. deriv
             # decides when this is the case.
             try:
                 # calculate the new value
@@ -103,7 +103,7 @@ class ODEinit(object):
                 # Error concerns the y-values
                 break
         
-        # to assert that the ODE has been integrated in funtions that use yOut.
+        # to assert that the ODE has been integrated in functions that use yOut.
         self.flagIntegrated = True
 
 if __name__=="__main__":

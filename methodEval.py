@@ -57,7 +57,7 @@ def plots():
     plt.xlim(0, 20)
     plt.xlabel("time t, s")
     plt.ylim(-0.5,0.5)
-    plt.ylabel("position x(t)")
+    plt.ylabel("position x(t) - theory")
     plt.legend(["euler1", "euler2", "heun"], loc="upper left")
     plt.show
     plt.savefig("eul12+heun-theory.pdf")

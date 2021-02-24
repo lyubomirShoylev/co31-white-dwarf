@@ -51,7 +51,7 @@ def convergencePlots():
 
     # plots of delta m / m_conv
     plt.subplot(4,2,2)
-    plt.title("Relativisitc case")
+    plt.title("Relativistic case")
     plt.plot(E6Relativ["NoIter"], abs(E6Relativ["massSolMass"]-e6RconvM)/e6RconvM)
     plt.plot(E10Relativ["NoIter"], abs(E10Relativ["massSolMass"]-e10RconvM)/e10RconvM)
     plt.plot(E14Relativ["NoIter"], abs(E14Relativ["massSolMass"]-e14RconvM)/e14RconvM)
@@ -152,7 +152,7 @@ def whiteDwarfPlots():
     plt.figure()
     plt.plot(nonRres["rhoC"], nonRres["massSolMass"])
     plt.plot(Rres["rhoC"], Rres["massSolMass"])
-    plt.axhline(1.434, c="grey")
+    plt.axhline(1.434, c="grey", ls='--', lw=0.5)
     plt.xscale("log")
     plt.yscale("log")
     plt.xlabel("Central density, $\\rho_\mathrm{C}$, $\mathrm{kg} \cdot \mathrm{m}^{-3}$")
@@ -164,7 +164,7 @@ def whiteDwarfPlots():
     plt.figure()
     plt.plot(nonRres["massSolMass"], nonRres["radiusKM"])
     plt.plot(Rres["massSolMass"], Rres["radiusKM"])
-    plt.axvline(1.434, c="grey")
+    plt.axvline(1.434, c="grey", ls='--', lw=0.5)
     plt.xlim(0, 2.1)
     plt.ylim(0, 20000)
     plt.xlabel("Mass, $M_\mathrm{sol}$")

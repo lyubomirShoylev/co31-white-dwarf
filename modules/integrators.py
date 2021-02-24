@@ -20,7 +20,7 @@ All of the functions defined are to act on np.ndarray structures, therefore
 should be element-wise functions; all of the magic is done for us by numpy. 
 The differential equation which they iterate is set up as `dy/dx = f(x, y)`, 
 where `y` and `f` are N-dimensional vectors. Hence, all of the functions
-recieve four parameters:
+receive four parameters:
 
     x : float, the point at which we start computing
     y : array_like, the values of the y-vector at x
@@ -96,7 +96,7 @@ def heun(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     -------
     np.ndarray
         The returned value is the approximation of y(x + h) using the Heun
-        algoritm.
+        algorithm.
     """
     return y + 0.5*h*(deriv(x, y) + deriv(x + h, y + h*deriv(x,y)))
 
@@ -123,7 +123,7 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     -------
     np.ndarray
         The returned value is the approximation of y(x + h) using the 4th order
-        Runge-Kutta algoritm.
+        Runge-Kutta algorithm.
     
     Raises
     ------
@@ -136,7 +136,7 @@ def rk4(x: float, y: np.ndarray, deriv, h: float) -> np.ndarray:
     Note that in the case deriv cannot be computed for any of the steps, the
     error is handled by raising a value error back to the integrator method of 
     the ODE class where this is handled. Additionally, an improvement in the
-    calculation order is implemented as per [1]_, where caluclation cycle
+    calculation order is implemented as per [1]_, where calculation cycle
     number is reduced, as well as memory usage.
 
     Sources
